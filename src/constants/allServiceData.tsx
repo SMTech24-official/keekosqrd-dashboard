@@ -1,0 +1,67 @@
+export const serviceTableHeaders = [
+  { label: "Service Name", key: "service-name" },
+  { label: "Normal Price", key: "normal-price" },
+  { label: "Premium Price", key: "premium-price" },
+  { label: "Duration", key: "duration" },
+  { label: "Available Time", key: "available-time" },
+  { label: "Availability", key: "availability" },
+  { label: "Action", key: "action" },
+];
+
+export const serviceData = [
+  {
+    id: "1",
+    serviceName: "Exterior Service",
+    normalPrice: "15",
+    premiumPrice: "20",
+    duration: "15-20 Mins",
+    availableTime: ["10:00PM", "11:00PM", "12:00PM", "13:00PM", "14:00PM"],
+    status: "active",
+  },
+  {
+    id: "2",
+    serviceName: "Exterior Service",
+    normalPrice: "15",
+    premiumPrice: "20",
+    duration: "15-20 Mins",
+    availableTime: ["10:00PM", "11:00PM", "12:00PM", "13:00PM", "14:00PM"],
+    status: "Inactive",
+  },
+  {
+    id: "3",
+    serviceName: "Exterior Service",
+    normalPrice: "15",
+    premiumPrice: "20",
+    duration: "15-20 Mins",
+    availableTime: ["10:00PM", "11:00PM",],
+    status: "active",
+  },
+  {
+    id: "4",
+    serviceName: "Exterior Service",
+    normalPrice: "15",
+    premiumPrice: "20",
+    duration: "15-20 Mins",
+    availableTime: ["10:00PM", "11:00PM", "12:00PM", "13:00PM", "14:00PM"],
+    status: "Inactive",
+  },
+  {
+    id: "5",
+    serviceName: "Exterior Service",
+    normalPrice: "15",
+    premiumPrice: "20",
+    duration: "15-20 Mins",
+    availableTime: ["10:00PM", "11:00PM", "12:00PM", "13:00PM", "14:00PM"],
+    status: "active",
+  },
+  {
+    id: "6",
+    serviceName: "Exterior Service",
+    normalPrice: "15",
+    premiumPrice: "20",
+    duration: "15-20 Mins",
+    availableTime: ["10:00PM", "11:00PM", "12:00PM", "13:00PM", "14:00PM"],
+    status: "Inactive",
+  },
+  // Add more mock data as needed
+];

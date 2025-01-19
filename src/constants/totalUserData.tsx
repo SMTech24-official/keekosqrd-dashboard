@@ -1,0 +1,75 @@
+import img from "@/assets/driver_image-two.png";
+
+export const userTableHeaders = [
+  { label: "User", key: "user" },
+  { label: "Phone", key: "phone" },
+  { label: "Location", key: "location" },
+  { label: "Total Booking", key: "totalBooking" },
+  { label: "Date", key: "date" },
+  { label: "Status", key: "status" },
+  { label: "Action", key: "action" },
+];
+
+export const userData = [
+  {
+    id: "1",
+    avatar: img,
+    name: "Albert Flores",
+    phone: "077 5665 8785",
+    location: "55455, Saudi Arabia",
+    totalBooking: "02",
+    date: "March 6, 2025",
+    status: "Blocked",
+  },
+  {
+    id: "2",
+    avatar: img,
+    name: "Cameron Williamson",
+    phone: "070 3397 6621",
+    location: "55455, Saudi Arabia",
+    totalBooking: "06",
+    date: "March 23, 2015",
+    status: "Active",
+  },
+  {
+    id: "3",
+    avatar: img,
+    name: "Albert Flores",
+    phone: "077 5665 8785",
+    location: "55455, Saudi Arabia",
+    totalBooking: "02",
+    date: "March 6, 2025",
+    status: "Blocked",
+  },
+  {
+    id: "4",
+    avatar: img,
+    name: "Cameron Williamson",
+    phone: "070 3397 6621",
+    location: "55455, Saudi Arabia",
+    totalBooking: "06",
+    date: "March 23, 2015",
+    status: "Active",
+  },
+  {
+    id: "5",
+    avatar: img,
+    name: "Albert Flores",
+    phone: "077 5665 8785",
+    location: "55455, Saudi Arabia",
+    totalBooking: "02",
+    date: "March 6, 2025",
+    status: "Blocked",
+  },
+  {
+    id: "6",
+    avatar: img,
+    name: "Cameron Williamson",
+    phone: "070 3397 6621",
+    location: "55455, Saudi Arabia",
+    totalBooking: "06",
+    date: "March 23, 2015",
+    status: "Active",
+  },
+  // Add more mock data as needed
+]
