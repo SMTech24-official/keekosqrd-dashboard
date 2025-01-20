@@ -1,163 +1,98 @@
 "use client";
 
-import { MoreVertical } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useExportUsersMutation } from "@/redux/features/users/usersApi";
+import profile from "@/assets/logo/profileee.png";
 import { TableProps } from "@/interface/table.type";
-import { useState } from "react";
 
 export default function TotalUserTable({
   tableHeader,
   tableData,
   isDelete = false,
 }: TableProps) {
-  const [isActive, setIsActive] = useState("");
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  const [selectAll, setSelectAll] = useState(false);
-  console.log(isActive, selectedRows, selectAll);
+  const [exportUsers, { isLoading }] = useExportUsersMutation();
 
-  const toggleSelectAll = () => {
-    if (selectAll) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(tableData.map((item) => item.id));
-    }
-    setSelectAll(!selectAll);
-  };
+  const handleExport = async () => {
+    try {
+      const response = await exportUsers({ format: "csv" }).unwrap(); 
 
-  const toggleRowSelection = (id: string) => {
-    setSelectedRows((prev) =>
-      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
-    );
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case "blocked":
-        return "bg-[#F23045]/10 text-[#F23045]";
-      case "active":
-        return "bg-[#0DBAB2]/10 text-[#0DBAB2]";
-      default:
-        return "bg-gray-50 text-gray-500";
-    }
-  };
-  const getDotColor = (dot: string) => {
-    switch (dot.toLowerCase()) {
-      case "blocked":
-        return "bg-[#F23045]";
-      case "active":
-        return "bg-[#0DBAB2] ";
-      default:
-        return "bg-gray-50";
+      // Assuming the backend returns a downloadable file blob
+      const blob = new Blob([response], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "users_export.csv"); // File name
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Export failed:", error);
     }
   };
 
   return (
-    <div className="w-full overflow-auto bg-white rounded-lg shadow-md">
-      <table className="w-full text-sm md:text-base border-y mt-5">
-        <thead className="border-b border-gray-200">
-          <tr>
-            <th className="px-4 py-4 text-start font-medium text-gray-500 first:pl-6 last:pr-6">
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={toggleSelectAll}
-              />
-            </th>
-            {tableHeader.map((header, idx) => (
-              <th
-                key={idx}
-                className="px-4 py-4 text-start font-medium text-gray-500 first:pl-6 last:pr-6"
-              >
-                {header.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((item) => {
-            const isChecked = selectedRows.includes(item.id);
-            return (
-              <tr
-                key={item.id}
-                className="border-b border-gray-200 last:border-0"
-              >
-                <td className="px-4 py-4 first:pl-6">
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => toggleRowSelection(item.id)}
-                  />
-                </td>
+    <div>
+      <div className="w-full overflow-auto bg-white rounded-lg shadow-md">
+        <table className="w-full text-sm md:text-base border-y mt-5">
+          <thead className="border-b border-gray-200">
+            <tr>
+              {tableHeader.map((header, idx) => (
+                <th
+                  key={idx}
+                  className="px-4 py-4 text-start font-medium text-gray-500 first:pl-6 last:pr-6"
+                >
+                  {header.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((item) => (
+              <tr key={item.id} className="border-b border-gray">
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={item.avatar}
+                      src={item.profile_image || profile}
                       alt={item.name}
                       width={40}
                       height={40}
                       className="rounded-full"
                     />
-                    <span className="font-medium text-gray-900">
-                      {item.name}
-                    </span>
                   </div>
                 </td>
-                <td className="px-4 py-4 text-gray-500">{item.phone}</td>
-                <td className="px-4 py-4 text-[#131D26]">{item.location}</td>
-                <td className="px-4 py-4 text-gray-500">{item.totalBooking}</td>
-                <td className="px-4 py-4 text-gray-500">{item.date}</td>
-                <td className="px-4 py-4 ">
+                <td className="px-4 py-4 text-gray-500">
+                  {item.first_name} {item.last_name}
+                </td>
+                <td className="px-4 py-4 text-[#131D26]">{item.email}</td>
+                <td className="px-4 py-4 text-gray-500">
+                  {item.payment_method || "N/A"}
+                </td>
+                <td className="px-4 py-4 text-gray-500">
                   <span
-                    className={`inline-flex items-center rounded-lg px-2 py-1 text-sm font-bold ${getStatusColor(
-                      item.status
-                    )}`}
+                    className={`px-3 py-1 text-sm font-medium rounded-full ${
+                      item?.status
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
                   >
-                    <span className="flex items-center gap-1">
-                      <span
-                        className={`w-2 h-2 rounded-full ${getDotColor(
-                          item.status
-                        )}`}
-                      ></span>
-                      {item.status}
-                    </span>
+                    {item?.status ? "Active" : "Inactive"}
                   </span>
                 </td>
-                <td className="flex justify-start items-center px-4 py-4 text-right pr-6">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="p-2">
-                      <DropdownMenuItem
-                        onClick={() => setIsActive("active")}
-                        className={`text-sm font-bold bg-[#0DBAB2]/10 text-[#0DBAB2]`}
-                      >
-                        Active
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => setIsActive("blocked")}
-                        className={`text-sm font-bold mt-2 bg-[#F23045]/10 text-[#F23045]`}
-                      >
-                        Blocked
-                      </DropdownMenuItem>
-                      {isDelete && <DropdownMenuItem>Delete</DropdownMenuItem>}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </td>
+                <td className="px-4 py-4 text-[#131D26]">{item.formattedCreatedAt}</td>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex items-center justify-end mt-6">
+        <button
+          onClick={handleExport}
+          disabled={isLoading}
+          className="bg-grey text-default px-6 py-3 rounded-md hover:bg-gray-600"
+        >
+          {isLoading ? "Exporting..." : "Export"}
+        </button>
+      </div>
     </div>
   );
 }

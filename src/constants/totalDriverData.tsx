@@ -8,7 +8,8 @@ export const driverTableHeaders = [
   { label: "Price", key: "price" },
   { label: "Model", key: "model" },
   { label: "Size", key: "size" },
-  { label: "Date", key: "date" },
+  { label: "Status", key: "status" },
+  { label: "Action", key: "action" },
 ];
 
 export const driverData = [

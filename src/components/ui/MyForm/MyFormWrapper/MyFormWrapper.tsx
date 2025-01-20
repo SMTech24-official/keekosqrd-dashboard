@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 
 const MyFormWrapper = ({
   onSubmit,
+  resolver,
   className,
   children,
   defaultValues,
-  resolver,
 }: {
   onSubmit: (data: any, reset: () => void) => void;
   className?: string;

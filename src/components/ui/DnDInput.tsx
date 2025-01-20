@@ -96,8 +96,8 @@ const DragAndDropImageUpload = ({
                 </div>
               ) : (
                 <>
-                  <label className="bg-primary rounded-full text-white p-2 cursor-pointer">
-                    <CiPower className="min-h-8 min-w-8 bg-primary text-white" />
+                  <label className="bg-grey rounded-full text-default p-2 cursor-pointer">
+                    <CiPower className="min-h-8 min-w-8 bg-grey text-default" />
                     <input
                       type="file"
                       accept={acceptedTypes === "image" ? "image/*" : ".pdf"}
@@ -112,7 +112,7 @@ const DragAndDropImageUpload = ({
                   </label>
                   <p className="text-sm text-center text-gray-500 mt-2">
                     Drag and drop or{" "}
-                    <span className="text-primary">Choose File</span> to Upload
+                    <span className="text-default">Choose File</span> to Upload
                   </p>
                   <p className="text-sm text-center text-[#A1A1A1]">
                     Supported Formate: Jpg, png

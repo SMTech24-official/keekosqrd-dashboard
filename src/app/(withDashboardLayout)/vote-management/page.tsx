@@ -1,4 +1,5 @@
 // import BookingList from "@/components/Dashboard/pages/bookingList/BookingList";
+import VoteManagement from "@/components/Dashboard/pages/voteManagement/VoteManagement";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="dashboard-containers relative min-h-screen">
-      {/* <BookingList /> */}
+     <VoteManagement/>
     </div>
   );
 }

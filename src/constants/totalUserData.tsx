@@ -1,13 +1,12 @@
 import img from "@/assets/driver_image-two.png";
 
 export const userTableHeaders = [
-  { label: "User", key: "user" },
-  { label: "Phone", key: "phone" },
-  { label: "Location", key: "location" },
-  { label: "Total Booking", key: "totalBooking" },
-  { label: "Date", key: "date" },
+  { label: "Image", key: "image" },
+  { label: "Name", key: "name" },
+  { label: "email", key: "email" },
+  { label: "Payment Method", key: "paymentMethod" },
   { label: "Status", key: "status" },
-  { label: "Action", key: "action" },
+  { label: "Date", key: "date" },
 ];
 
 export const userData = [
