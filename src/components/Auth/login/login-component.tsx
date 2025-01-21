@@ -36,7 +36,7 @@ const LoginComponent = () => {
       router
     );
 
-    console.log(res)
+    console.log("res ", res)
   };
 
   return (

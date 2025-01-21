@@ -6,18 +6,9 @@ import TablePagination from "@/components/ui/tables/TablePagination";
 import VoteManagementTable from "@/components/ui/tables/VoteManagementTable";
 import { votesTableHeaders } from "@/constants/totalVoteManagementData";
 import { useGetAllVotesQuery } from "@/redux/features/Votes/votesApi";
+import { formatDate } from "@/utils/formatDate";
 
-// Helper function to format the date
-const formatDate = (dateString: string | undefined): string => {
-  if (!dateString) return "N/A";
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  };
-  return date.toLocaleString("en-US", options);
-};
+
 
 // Helper function to generate month options
 const generateMonthOptions = (): { label: string; value: number }[] => {

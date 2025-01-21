@@ -10,7 +10,7 @@ export default function AllProducts() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Fetch products data from the backend
-  const { data: result, isLoading } = useGetAllProductsQuery({ page: currentPage });
+  const { data: result, isLoading } = useGetAllProductsQuery({ });
 
   // Extract data from the API response
   const products = result?.data?.products?.data || [];
@@ -19,7 +19,7 @@ export default function AllProducts() {
   // Handle page change from the pagination component
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page); // Update local state
+      setCurrentPage(page); 
     }
   };
 

@@ -6,7 +6,7 @@ import member from "@/assets/logo/group-chat.png";
 import { useEffect, useState } from "react";
 import { StaticImageData } from "next/image";
 import { MetricCard } from "../../components/cards/metricCard/MetricCard";
-import { useGetTotalPaymentsQuery, useGetTotalMembersQuery, useGetTotalVotersQuery } from "@/redux/features/users/usersApi";
+import { useGetTotalPaymentsQuery, useGetTotalMembersQuery, useGetTotalVotersQuery, useGetUserPaymentsQuery } from "@/redux/features/users/usersApi";
 import TransactionTable from "@/components/ui/tables/TransactionTable";
 import { transactionTableHeaders } from "@/constants/transactionTableHeaders";
 import { useGetAllPaymentsQuery } from "@/redux/features/payment/paymentApi";
@@ -48,22 +48,16 @@ export default function Dashboard() {
   const { data: totalVoters, isLoading: isLoadingVoters } = useGetTotalVotersQuery({});
 
   // Fetch payments data for the selected month and year
-  const { data: payments, isLoading } = useGetAllPaymentsQuery({
-    month: selectedMonth,
-    year: selectedYear,
-  });
+  const { data: payments, isLoading } = useGetUserPaymentsQuery({});
 
   // Ensure payments data exists before trying to access it
   const transactionData = payments?.data?.payments || [];
+  console.log(transactionData)
 
   // Handle pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
-  const totalPages = Math.ceil(transactionData?.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = transactionData.slice(startIndex, startIndex + itemsPerPage);
 
-  const formattedData = paginatedData.map((payment: any) => ({
+
+  const formattedData = transactionData.map((payment: any) => ({
     ...payment,
     formattedCreatedAt: formatDate(payment.created_at),
   }));
@@ -111,38 +105,7 @@ export default function Dashboard() {
       <div className="mt-8 relative">
         <div className="flex items-center justify-between">
           <h1 className="text-default text-[25px] font-semibold mb-6">Transaction History</h1>
-          <div>
-            {/* Filter by Month and Year */}
-            <div className="flex items-center gap-4 mb-6">
-              <label className="text-gray-500 font-medium">Filter by:</label>
-
-              {/* Month Dropdown */}
-              <select
-                value={selectedMonth}
-                onChange={(e) => setSelectedMonth(Number(e.target.value))}
-                className="appearance-none bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-gray-300"
-              >
-                {generateMonthOptions().map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-
-              {/* Year Dropdown */}
-              <select
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(Number(e.target.value))}
-                className="appearance-none bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-gray-300"
-              >
-                {Array.from({ length: 5 }, (_, i) => currentYear - i).map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+         
         </div>
         <div className="overflow-x-auto">
           <TransactionTable
@@ -150,11 +113,7 @@ export default function Dashboard() {
             tableData={formattedData}
           />
         </div>
-        <TablePagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-        />
+        
       </div>
     </div>
   );

@@ -36,6 +36,26 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       icon: AiOutlineProduct
     },
     {
+      name: "User Dashboard",
+      href: "/user-dashboard",
+      icon: AiOutlineProduct
+    },
+    {
+      name: "Profile",
+      href: "/profile",
+      icon: AiOutlineProduct
+    },
+    {
+      name: "Transaction History",
+      href: "/transaction-history",
+      icon: AiOutlineProduct
+    },
+    {
+      name: "Vote History",
+      href: "/vote-history",
+      icon: AiOutlineProduct
+    },
+    {
       name: "Product Management",
       href: "/product-management",
       icon: AiOutlineProduct

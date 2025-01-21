@@ -14,7 +14,7 @@ export default function TotalUserTable({
 
   const handleExport = async () => {
     try {
-      const response = await exportUsers({ format: "csv" }).unwrap(); 
+      const response = await exportUsers({ format: "csv" }).unwrap();
 
       // Assuming the backend returns a downloadable file blob
       const blob = new Blob([response], { type: "text/csv" });
@@ -52,7 +52,7 @@ export default function TotalUserTable({
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={item.profile_image || profile}
+                      src={`item.profile_image || profile`}
                       alt={item.name}
                       width={40}
                       height={40}
@@ -78,7 +78,9 @@ export default function TotalUserTable({
                     {item?.status ? "Active" : "Inactive"}
                   </span>
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">{item.formattedCreatedAt}</td>
+                <td className="px-4 py-4 text-[#131D26]">
+                  {item.formattedCreatedAt}
+                </td>
               </tr>
             ))}
           </tbody>

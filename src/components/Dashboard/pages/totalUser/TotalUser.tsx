@@ -34,7 +34,7 @@ export default function TotalUser() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate pagination
-  const itemsPerPage = 5;
+  const itemsPerPage = 7;
   const totalPages = Math.ceil(userData?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = userData.slice(startIndex, startIndex + itemsPerPage);

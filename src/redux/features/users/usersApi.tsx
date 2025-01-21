@@ -2,6 +2,7 @@ import { baseApi } from "@/redux/api/baseApi";
 
 const usersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    // Get all users
     getAllUsers: build.query({
       query: () => ({
         url: `/users/show`,
@@ -15,13 +16,54 @@ const usersApi = baseApi.injectEndpoints({
       query: (exportData) => ({
         url: `/export-users`,
         method: "POST",
-        body: exportData, 
+        body: exportData,
       }),
-      invalidatesTags: ["users"], 
+      invalidatesTags: ["users"],
     }),
 
- 
+    // Get total payments
+    getTotalPayments: build.query({
+      query: () => ({
+        url: `/payments/total`,
+        method: "GET",
+      }),
+      providesTags: ["payments"], 
+    }),
+
+    // Get total members
+    getTotalMembers: build.query({
+      query: () => ({
+        url: `/total-members`,
+        method: "GET",
+      }),
+      providesTags: ["members"], 
+    }),
+
+    // Get total voters
+    getTotalVoters: build.query({
+      query: () => ({
+        url: `/total-voters`,
+        method: "GET",
+      }),
+      providesTags: ["voters"], 
+    }),
+
+     // Get user payments
+     getUserPayments: build.query({
+      query: () => ({
+        url: `/payments/user`,
+        method: "GET",
+      }),
+      providesTags: ["payments"], 
+    }),
   }),
 });
 
-export const { useGetAllUsersQuery, useExportUsersMutation} = usersApi;
+export const {
+  useGetAllUsersQuery,
+  useExportUsersMutation,
+  useGetTotalPaymentsQuery,
+  useGetTotalMembersQuery,
+  useGetTotalVotersQuery,
+  useGetUserPaymentsQuery
+} = usersApi;

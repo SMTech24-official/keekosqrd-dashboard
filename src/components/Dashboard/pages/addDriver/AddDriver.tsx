@@ -13,7 +13,7 @@ import { toast } from "sonner";
 
 export default function AddProduct() {
   const router = useRouter();
-  const [addProductFn] = useAddProductMutation(); 
+  const [addProductFn] = useAddProductMutation();
 
   const handleSubmit = async (data: any) => {
     console.log("Form submitted", data);
@@ -33,6 +33,7 @@ export default function AddProduct() {
       formData.append("product_image", data.productImage[0]);
     }
 
+    // console.log("fo")
     try {
       // Call the API to add product
       const { data: res, error } = await addProductFn(formData);
@@ -40,7 +41,7 @@ export default function AddProduct() {
       // If successful, redirect or show a success message
       if (res) {
         console.log("Product added successfully:", res);
-        toast.success("Product added successfully")
+        toast.success("Product added successfully");
         router.push("/product-management");
       }
 
@@ -55,10 +56,12 @@ export default function AddProduct() {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-5">
-      <h1 className="text-2xl font-medium py-3 text-default">Add New Product</h1>
+      <h1 className="text-2xl font-medium py-3 text-default">
+        Add New Product
+      </h1>
       <MyFormWrapper
         onSubmit={handleSubmit}
-        resolver={zodResolver(driverSchema)} 
+        resolver={zodResolver(driverSchema)}
         className="space-y-6 mt-4"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-start">
@@ -113,15 +116,16 @@ export default function AddProduct() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Status</label>
-            <select
+            <MyFormInput
               name="status"
-              className="w-full p-2 border border-gray-300 rounded-md"
-              defaultValue="Active"
-            >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
+              label="Status"
+              isDropdown={true}
+              dropdownOptions={[
+                { label: "true", value: "true" },
+                { label: "false", value: "false" },
+              ]}
+              value="true"
+            />
           </div>
 
           {/* Updated Description field to a Textarea */}
