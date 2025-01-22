@@ -1,6 +1,7 @@
 "use client";
 
 import member from "@/assets/logo/group-chat.png";
+import tropy from "@/assets/logo/trophy.png";
 import TransactionTable from "@/components/ui/tables/TransactionTable";
 import { transactionTableHeaders } from "@/constants/transactionTableHeaders";
 import {
@@ -8,31 +9,18 @@ import {
   useGetTotalUserWinnerQuery,
   useGetUserPaymentsQuery,
 } from "@/redux/features/users/usersApi";
+
+import { formatDate } from "@/utils/formatDate";
 import { StaticImageData } from "next/image";
-import { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { MetricCard } from "../../components/cards/metricCard/MetricCard";
-import { GiPodiumWinner } from "react-icons/gi";
-// import { useGetAllPaymentsQuery } from "@/redux/features/payment/paymentApi";
-import { formatDate } from "@/utils/formatDate";
-// import TablePagination from "@/components/ui/tables/TablePagination";
-
-// Helper function to generate month options
-// const generateMonthOptions = (): { label: string; value: number }[] => {
-//   const options = [];
-//   for (let i = 0; i < 12; i++) {
-//     const date = new Date(0, i);
-//     options.push({ label: date.toLocaleString("default", { month: "long" }), value: i + 1 });
-//   }
-//   return options;
-// };
 
 export default function Dashboard() {
   // Use state to store the API response data
   interface Metric {
     title: string;
     value: number;
-    icon: ReactNode | StaticImageData;
+    icon: StaticImageData;
     change: number;
     description: string;
   }
@@ -84,7 +72,7 @@ export default function Dashboard() {
         {
           title: "Total Win",
           change: 0,
-          icon: <GiPodiumWinner />,
+          icon: tropy,
           value: totalWin?.data?.total_winer,
           description: "Total number of voters",
         },
