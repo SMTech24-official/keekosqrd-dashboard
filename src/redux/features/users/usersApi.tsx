@@ -56,6 +56,14 @@ const usersApi = baseApi.injectEndpoints({
       }),
       providesTags: ["payments"], 
     }),
+
+     getUserAllVotes: build.query({
+      query: () => ({
+        url: `/users/voting-history`,
+        method: "GET",
+      }),
+      providesTags: ["votes"], 
+    }),
   }),
 });
 
@@ -65,5 +73,6 @@ export const {
   useGetTotalPaymentsQuery,
   useGetTotalMembersQuery,
   useGetTotalVotersQuery,
-  useGetUserPaymentsQuery
+  useGetUserPaymentsQuery,
+  useGetUserAllVotesQuery
 } = usersApi;

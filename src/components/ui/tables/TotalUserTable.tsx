@@ -2,29 +2,48 @@
 
 import Image from "next/image";
 import { useExportUsersMutation } from "@/redux/features/users/usersApi";
-// import profile from "@/assets/logo/profileee.png";
 import { TableProps } from "@/interface/table.type";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import profile from "@/assets/logo/profileee.png"
 
-export default function TotalUserTable({
-  tableHeader,
-  tableData,
-  // isDelete = false,
-}: TableProps) {
-  const [exportUsers, { isLoading }] = useExportUsersMutation();
+export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
+  const [, { isLoading }] = useExportUsersMutation();
 
   const handleExport = async () => {
     try {
-      const response = await exportUsers({ format: "csv" }).unwrap();
+      const doc = new jsPDF();
 
-      // Assuming the backend returns a downloadable file blob
-      const blob = new Blob([response], { type: "text/csv" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "users_export.csv"); // File name
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      // Add title to the PDF
+      doc.setFontSize(18);
+      doc.text("User Data Export", 14, 22);
+
+      // Set font for the table
+      doc.setFontSize(10);
+
+      // Add table headers
+      const headers = tableHeader.map((header) => header.label);
+      const yOffset = 30;
+
+      // Headers and table data
+
+      autoTable(doc, {
+        head: [headers],
+        body: tableData.map((item) => [
+          item.profile_image || "N/A",
+          item.first_name + " " + item.last_name,
+          item.email || "N\A",
+          item.addres || "N\A",
+          item.payment_method || "N/A",
+          item.status ? "Active" : "Inactive",
+          item.formattedCreatedAt || "N/A",
+        ]),
+        startY: yOffset,
+        theme: "grid",
+      });
+
+      // Save PDF
+      doc.save("users_export.pdf");
     } catch (error) {
       console.error("Export failed:", error);
     }
@@ -52,7 +71,7 @@ export default function TotalUserTable({
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={`item.profile_image || profile`}
+                      src={`http://10.0.20.59:8001/storage/${item.profile_image}` || profile}
                       alt={item.name}
                       width={40}
                       height={40}
@@ -61,9 +80,10 @@ export default function TotalUserTable({
                   </div>
                 </td>
                 <td className="px-4 py-4 text-gray-500">
-                  {item.first_name} {item.last_name}
+                  {item.first_name || "N/A"} {item.last_name || "N/A"}
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">{item.email}</td>
+                <td className="px-4 py-4 text-[#131D26]">{item.email || "N/A"}</td>
+                <td className="px-4 py-4 text-[#131D26]">{item.address || "N/A"}</td>
                 <td className="px-4 py-4 text-gray-500">
                   {item.payment_method || "N/A"}
                 </td>
@@ -79,7 +99,7 @@ export default function TotalUserTable({
                   </span>
                 </td>
                 <td className="px-4 py-4 text-[#131D26]">
-                  {item.formattedCreatedAt}
+                  {item.formattedCreatedAt || "N/A"}
                 </td>
               </tr>
             ))}

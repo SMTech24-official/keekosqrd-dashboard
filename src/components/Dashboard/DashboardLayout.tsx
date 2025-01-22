@@ -4,17 +4,24 @@ import TopBar from "@/components/Dashboard/components/navigationBar/TopBar";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import React, { useEffect, useRef, useState } from "react";
-import { AiOutlineCreditCard, AiOutlineCheckSquare, AiOutlineProduct, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineCheckSquare, AiOutlineProduct, AiOutlineTransaction, AiOutlineUser } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
+import { MdManageHistory, MdOutlineHistory } from "react-icons/md";
 import SideBar from "./components/navigationBar/SiderBar";
+import { GiPodiumWinner } from "react-icons/gi";
+// import { useGetMeUserQuery } from "@/redux/features/profile/profileApi";
 // import serviceIcon from "@/assets/NavIcons/all-service.svg";
 // import couponIcon from "@/assets/NavIcons/coupon.svg";
 
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAppSelector(selectCurrentUser);
+  const role = user?.role || '';
+  console.log("user",role)
   const [isOpen, setIsOpen] = useState(false);
-
   const navRef = useRef<HTMLDivElement>(null);
+  // const {data} = useGetMeUserQuery({})
+  // console.log("me user", data)
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -33,57 +40,65 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     {
       name: "Dashboard",
       href: "/dashboard",
-      icon: AiOutlineProduct
+      icon: AiOutlineProduct,
+      roles:['admin']
     },
     {
       name: "User Dashboard",
       href: "/user-dashboard",
-      icon: AiOutlineProduct
+      icon: AiOutlineProduct,
+      roles:['user']
     },
     {
       name: "Profile",
       href: "/profile",
-      icon: AiOutlineProduct
+      icon: CgProfile,
+      roles:["admin", "user"]
     },
     {
       name: "Transaction History",
       href: "/transaction-history",
-      icon: AiOutlineProduct
+      icon: AiOutlineTransaction,
     },
     {
       name: "Vote History",
       href: "/vote-history",
-      icon: AiOutlineProduct
+      icon: MdOutlineHistory,
+      roles:['user']
     },
     {
       name: "Product Management",
       href: "/product-management",
-      icon: AiOutlineProduct
+      icon: MdManageHistory,
+      roles:['admin']
     },
     {
       name: "User Management",
       href: "/user-management",
-      icon: AiOutlineUser
-      
+      icon: AiOutlineUser,
+      roles:['admin']
     },
     {
       name: "Vote Management",
       href: "/vote-management",
       icon: AiOutlineCheckSquare,
+      roles:['admin']
     },
-
     {
-      name: "History",
-      href: "/vehicles-track-list",
-      icon: AiOutlineCreditCard,
+      name: "Winner History",
+      href: "/winner-history",
+      icon: GiPodiumWinner,
+      roles:['admin']
     },
   ];
+
+  const filteredMenuItems = navLink.filter(item => item.roles?.includes(role));
 
   return (
     <div className="flex">
       <div className="max-h-screen h-full sticky top-0 z-50">
         <SideBar
-          navLink={navLink}
+          navLink={filteredMenuItems}
           isOpen={isOpen}
           user={user}
           navRef={navRef}

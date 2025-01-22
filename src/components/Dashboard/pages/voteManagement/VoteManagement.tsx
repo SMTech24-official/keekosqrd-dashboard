@@ -49,8 +49,12 @@ export default function VoteManagement() {
 
   return (
     <div className="relative mt-8">
-      {/* Filters for Month and Year */}
-      <div className="flex items-center gap-4 mb-6">
+     <div className="flex items-center justify-between">
+     <div>
+        <h1 className="text-[25px] font-semibold text-default mb-7">Vote This Month</h1>
+      </div>
+       {/* Filters for Month and Year */}
+       <div className="flex items-center gap-4 mb-6">
         <label className="text-gray-500 font-medium">Filter by:</label>
 
         {/* Month Dropdown */}
@@ -79,6 +83,7 @@ export default function VoteManagement() {
           ))}
         </select>
       </div>
+     </div>
 
       {/* Table with Data */}
       <div className="overflow-x-auto">

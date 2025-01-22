@@ -4,7 +4,7 @@ import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ProtectedRoute roles={["admin"]}> {/* Pass the role here */}
+    <ProtectedRoute roles={["admin", "user"]}> 
       <DashboardLayout>{children}</DashboardLayout>
     </ProtectedRoute>
   );

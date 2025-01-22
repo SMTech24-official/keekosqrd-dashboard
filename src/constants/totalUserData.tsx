@@ -4,6 +4,7 @@ export const userTableHeaders = [
   { label: "Image", key: "image" },
   { label: "Name", key: "name" },
   { label: "email", key: "email" },
+  { label: "Address", key: "address" },
   { label: "Payment Method", key: "paymentMethod" },
   { label: "Status", key: "status" },
   { label: "Date", key: "date" },

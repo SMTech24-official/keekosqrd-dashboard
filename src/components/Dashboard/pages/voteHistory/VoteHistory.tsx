@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import TablePagination from "@/components/ui/tables/TablePagination";
-import TotalUserTable from "@/components/ui/tables/TotalUserTable";
-import { userTableHeaders } from "@/constants/totalUserData";
-import {useGetAllUsersQuery } from "@/redux/features/users/usersApi";
+import VoteHistoryTable from "@/components/ui/tables/VoteHistoryTable";
+import { voteHistoryHeader } from "@/constants/voteHistoryData";
+import {useGetUserAllVotesQuery } from "@/redux/features/users/usersApi";
 import { useState } from "react";
 
 // Helper function to format the date
@@ -25,19 +25,20 @@ const formatDate = (dateString: string | undefined): string => {
   return date.toLocaleString("en-US", options);
 };
 
-export default function TotalUser() {
+export default function VoteHistory() {
 
-  const { data } = useGetAllUsersQuery({})
+  const { data } = useGetUserAllVotesQuery({})
   console.log("data", data)
-  const userData = data?.data?.users || [];
-  // console.log(userDatas)
+  const userVotes = data?.data?.votes || [];
+  console.log("user votes", userVotes)
+  // console.log(userVotess)
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate pagination
   const itemsPerPage = 7;
-  const totalPages = Math.ceil(userData?.length / itemsPerPage);
+  const totalPages = Math.ceil(userVotes?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = userData.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedData = userVotes.slice(startIndex, startIndex + itemsPerPage);
 
 
     // Add formatted dates
@@ -48,12 +49,12 @@ export default function TotalUser() {
   
   return (
     <div className="relative mt-8 ">
-      <div>
-        <h1 className="text-[25px] font-semibold text-default mb-7">Total User</h1>
+        <div>
+        <h1 className="text-[25px] font-semibold text-default mb-7">Vote History</h1>
       </div>
       <div className="overflow-x-hidden-hidden overflow-x-auto">
-        <TotalUserTable
-          tableHeader={userTableHeaders}
+        <VoteHistoryTable
+          tableHeader={voteHistoryHeader}
           tableData={formattedData}
         />
       </div>
