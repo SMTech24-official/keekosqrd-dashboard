@@ -85,7 +85,7 @@ const Profile = () => {
       } else {
         toast.error("Error updating profile. Please try again.");
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred while updating your profile.");
     } finally {
       setIsUpdating(false);
@@ -121,10 +121,12 @@ const Profile = () => {
               className="text-darkBlack mt-2 p-2 w-full border rounded-[8px] focus:outline-none bg-transparent"
             />
             {avatarPreview && (
-              <img
+              <Image
                 src={avatarPreview}
                 alt="Preview"
                 className="w-20 h-20 rounded-full mt-4"
+                width={20}
+                height={20}
               />
             )}
           </div>

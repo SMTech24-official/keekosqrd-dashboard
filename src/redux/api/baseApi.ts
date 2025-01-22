@@ -1,12 +1,10 @@
 import {
   createApi,
   fetchBaseQuery,
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
+ 
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
-import { logout, setUser } from "../features/auth/authSlice";
+// import { logout, setUser } from "../features/auth/authSlice";
 //192.168.11.51:3007/api/v1
 // baseUrl: "https://api-kumba.code-commando.com/api/v1",
 const BaseUrl = "http://10.0.20.59:8001/api";

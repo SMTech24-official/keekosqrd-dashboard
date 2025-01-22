@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { TableProps } from "@/interface/table.type";
 import profile from "@/assets/logo/profileee.png";
-import { useSelectWinnerMutation } from "@/redux/features/Votes/votesApi"; // Import the useSelectWinnerMutation hook
+import { useSelectWinnerMutation } from "@/redux/features/Votes/votesApi"; 
 import { toast } from "sonner";
 
 export default function VoteManagementTable({
   tableHeader,
   tableData,
-  isDelete = false,
+  // isDelete = false,
 }: TableProps) {
   // Use the mutation hook to select a winner
   const [selectWinner, { isLoading, isError, error, isSuccess }] =
@@ -33,9 +33,13 @@ export default function VoteManagementTable({
         year,
       } as SelectWinnerParams).unwrap(); // unwrap to handle the response
       toast.success("Winner selected successfully!");
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error selecting winner:", error);
-      toast.error("Error selecting winner: " + error.message);
+      if (error instanceof Error) {
+        toast.error("Error selecting winner: " + error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
     }
   };
 

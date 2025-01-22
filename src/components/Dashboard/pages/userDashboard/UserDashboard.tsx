@@ -6,28 +6,33 @@ import member from "@/assets/logo/group-chat.png";
 import { useEffect, useState } from "react";
 import { StaticImageData } from "next/image";
 import { MetricCard } from "../../components/cards/metricCard/MetricCard";
-import { useGetTotalPaymentsQuery, useGetTotalMembersQuery, useGetTotalVotersQuery, useGetUserPaymentsQuery } from "@/redux/features/users/usersApi";
+import {
+  useGetTotalPaymentsQuery,
+  useGetTotalMembersQuery,
+  useGetTotalVotersQuery,
+  useGetUserPaymentsQuery,
+} from "@/redux/features/users/usersApi";
 import TransactionTable from "@/components/ui/tables/TransactionTable";
 import { transactionTableHeaders } from "@/constants/transactionTableHeaders";
-import { useGetAllPaymentsQuery } from "@/redux/features/payment/paymentApi";
+// import { useGetAllPaymentsQuery } from "@/redux/features/payment/paymentApi";
 import { formatDate } from "@/utils/formatDate";
-import TablePagination from "@/components/ui/tables/TablePagination";
+// import TablePagination from "@/components/ui/tables/TablePagination";
 
 // Helper function to generate month options
-const generateMonthOptions = (): { label: string; value: number }[] => {
-  const options = [];
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(0, i);
-    options.push({ label: date.toLocaleString("default", { month: "long" }), value: i + 1 });
-  }
-  return options;
-};
+// const generateMonthOptions = (): { label: string; value: number }[] => {
+//   const options = [];
+//   for (let i = 0; i < 12; i++) {
+//     const date = new Date(0, i);
+//     options.push({ label: date.toLocaleString("default", { month: "long" }), value: i + 1 });
+//   }
+//   return options;
+// };
 
 export default function Dashboard() {
   // Use state to store the API response data
   interface Metric {
     title: string;
-    value: any;
+    value: number;
     description: string;
     icon: StaticImageData;
     change: number;
@@ -35,32 +40,38 @@ export default function Dashboard() {
 
   const [metricsData, setMetricsData] = useState<Metric[]>([]);
 
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1;
-  const currentYear = currentDate.getFullYear();
-
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const [selectedYear, setSelectedYear] = useState(currentYear);
-
   // Fetch total payments, members, and voters from the API using hooks
-  const { data: totalPayments, isLoading: isLoadingPayments } = useGetTotalPaymentsQuery({});
-  const { data: totalMembers, isLoading: isLoadingMembers } = useGetTotalMembersQuery({});
-  const { data: totalVoters, isLoading: isLoadingVoters } = useGetTotalVotersQuery({});
+  const { data: totalPayments, isLoading: isLoadingPayments } =
+    useGetTotalPaymentsQuery({});
+  const { data: totalMembers, isLoading: isLoadingMembers } =
+    useGetTotalMembersQuery({});
+  const { data: totalVoters, isLoading: isLoadingVoters } =
+    useGetTotalVotersQuery({});
 
   // Fetch payments data for the selected month and year
   const { data: payments, isLoading } = useGetUserPaymentsQuery({});
 
   // Ensure payments data exists before trying to access it
   const transactionData = payments?.data?.payments || [];
-  console.log(transactionData)
+  console.log(transactionData);
 
   // Handle pagination
 
+  interface Payment {
+    created_at: string;
+    key: string;
+  }
 
-  const formattedData = transactionData.map((payment: any) => ({
-    ...payment,
-    formattedCreatedAt: formatDate(payment.created_at),
-  }));
+  interface FormattedPayment extends Payment {
+    formattedCreatedAt: string;
+  }
+
+  const formattedData: FormattedPayment[] = transactionData.map(
+    (payment: Payment) => ({
+      ...payment,
+      formattedCreatedAt: formatDate(payment.created_at),
+    })
+  );
 
   // Update metricsData once the API data is available
   useEffect(() => {
@@ -104,8 +115,9 @@ export default function Dashboard() {
       </div>
       <div className="mt-8 relative">
         <div className="flex items-center justify-between">
-          <h1 className="text-default text-[25px] font-semibold mb-6">Transaction History</h1>
-         
+          <h1 className="text-default text-[25px] font-semibold mb-6">
+            Transaction History
+          </h1>
         </div>
         <div className="overflow-x-auto">
           <TransactionTable
@@ -113,7 +125,6 @@ export default function Dashboard() {
             tableData={formattedData}
           />
         </div>
-        
       </div>
     </div>
   );

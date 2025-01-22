@@ -91,7 +91,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <div className="w-full">
         <div className="sticky top-0 z-40">
-          <TopBar setIsOpen={setIsOpen} isOpen={isOpen} user={user} />
+          <TopBar setIsOpen={setIsOpen} isOpen={isOpen}  />
         </div>
         <div className="bg-[#F6F6F6] min-h-screen"> {children}</div>
       </div>

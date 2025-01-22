@@ -6,9 +6,9 @@ import MyFormWrapper from "@/components/ui/MyForm/MyFormWrapper/MyFormWrapper";
 import MyFormInput from "@/components/ui/MyForm/MyFormInput/MyFormInput";
 import { Button } from "@nextui-org/react";
 import DnDInput from "@/components/ui/DnDInput";
-import { driverSchema } from "@/schema/driverSchema"; // Import your Zod schema
+import { driverSchema } from "@/schema/driverSchema"; 
 import { useRouter } from "next/navigation";
-import { useAddProductMutation } from "@/redux/features/products/productsApi"; // API hook for adding product
+import { useAddProductMutation } from "@/redux/features/products/productsApi"; 
 import { toast } from "sonner";
 
 export default function AddProduct() {

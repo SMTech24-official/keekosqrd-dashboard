@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import { useExportUsersMutation } from "@/redux/features/users/usersApi";
-import profile from "@/assets/logo/profileee.png";
+// import profile from "@/assets/logo/profileee.png";
 import { TableProps } from "@/interface/table.type";
 
 export default function TotalUserTable({
   tableHeader,
   tableData,
-  isDelete = false,
+  // isDelete = false,
 }: TableProps) {
   const [exportUsers, { isLoading }] = useExportUsersMutation();
 

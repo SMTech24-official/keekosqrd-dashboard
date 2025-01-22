@@ -54,7 +54,7 @@ TableProps) {
         </thead>
         <tbody>
           {Array.isArray(tableData) &&
-            tableData?.map((item: any) => {
+            tableData?.map((item) => {
               // const isChecked = selectedRows.includes(item.id);
               return (
                 <tr

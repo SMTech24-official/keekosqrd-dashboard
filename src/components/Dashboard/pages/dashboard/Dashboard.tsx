@@ -27,7 +27,7 @@ export default function Dashboard() {
   // Use state to store the API response data
   interface Metric {
     title: string;
-    value: any;
+    value: number,
     description: string;
     icon: StaticImageData;
     change: number;
@@ -63,7 +63,16 @@ export default function Dashboard() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = transactionData.slice(startIndex, startIndex + itemsPerPage);
 
-  const formattedData = paginatedData.map((payment: any) => ({
+  interface Payment {
+    created_at: string;
+    key: string;
+  }
+
+  interface FormattedPayment extends Payment {
+    formattedCreatedAt: string;
+  }
+
+  const formattedData: FormattedPayment[] = paginatedData.map((payment: Payment) => ({
     ...payment,
     formattedCreatedAt: formatDate(payment.created_at),
   }));

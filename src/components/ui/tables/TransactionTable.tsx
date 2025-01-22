@@ -1,14 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import { useExportUsersMutation } from "@/redux/features/users/usersApi";
-import profile from "@/assets/logo/profileee.png";
+// import Image from "next/image";
+// import { useExportUsersMutation } from "@/redux/features/users/usersApi"
+// import profile from "@/assets/logo/profileee.png";
 import { TableProps } from "@/interface/table.type";
 
 export default function TransactionTable({
   tableHeader,
   tableData,
-  isDelete = false,
+  // isDelete = false,
 }: TableProps) {
   
 
