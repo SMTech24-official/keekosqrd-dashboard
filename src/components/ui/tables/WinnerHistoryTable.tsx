@@ -5,9 +5,12 @@ import { useExportUsersMutation } from "@/redux/features/users/usersApi";
 import { TableProps } from "@/interface/table.type";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import profile from "@/assets/logo/profileee.png"
+import profile from "@/assets/logo/profileee.png";
 
-export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
+export default function WinnerHistoryTable({
+  tableHeader,
+  tableData,
+}: TableProps) {
   const [, { isLoading }] = useExportUsersMutation();
 
   const handleExport = async () => {
@@ -23,20 +26,19 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
 
       // Add table headers
       const headers = tableHeader.map((header) => header.label);
-      const yOffset = 30; 
+      const yOffset = 30;
 
       // Headers and table data
 
       autoTable(doc, {
         head: [headers],
         body: tableData.map((item) => [
-          item.profile_image || "N/A",
-          item.first_name + " " + item.last_name,
-          item.email || "N\A",
-          item.address || "N\A",
-          item.payment_method || "N/A",
-          item.status ? "Active" : "Inactive",
-          item.formattedCreatedAt || "N/A",
+          item?.user?.profile_image || "N/A",
+          item?.user?.first_name + " " + item?.user?.last_name,
+          item?.user?.email || "NA",
+          item?.user?.address || "NA",
+          "Winner",
+          item?.user?.formattedCreatedAt || "N/A",
         ]),
         startY: yOffset,
         theme: "grid",
@@ -71,8 +73,11 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={`http://10.0.20.59:8001/storage/${item.profile_image}` || profile}
-                      alt={item.name}
+                      src={
+                        `http://10.0.20.59:8001/storage/${item?.user?.profile_image}` ||
+                        profile
+                      }
+                      alt={item?.user?.name}
                       width={40}
                       height={40}
                       className="rounded-full"
@@ -80,23 +85,17 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
                   </div>
                 </td>
                 <td className="px-4 py-4 text-gray-500">
-                  {item.first_name || "N/A"} {item.last_name || "N/A"}
+                  {item?.user?.first_name || "N/A"}{" "}
+                  {item?.user?.last_name || "N/A"}
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">{item.email || "N/A"}</td>
-                <td className="px-4 py-4 text-[#131D26]">{item.address || "N/A"}</td>
-                <td className="px-4 py-4 text-gray-500">
-                  {item.payment_method || "N/A"}
+                <td className="px-4 py-4 text-[#131D26]">
+                  {item?.user?.email || "N/A"}
                 </td>
-                <td className="px-4 py-4 text-gray-500">
-                  <span
-                    className={`px-3 py-1 text-sm font-medium rounded-full ${
-                      item?.status
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {item?.status ? "Active" : "Inactive"}
-                  </span>
+                <td className="px-4 py-4 text-[#131D26]">
+                  {item?.user?.address || "N/A"}
+                </td>
+                <td className="px-4 py-4 text-[#131D26]">
+                  <span className="text-default font-semibold">Winner</span>
                 </td>
                 <td className="px-4 py-4 text-[#131D26]">
                   {item.formattedCreatedAt || "N/A"}

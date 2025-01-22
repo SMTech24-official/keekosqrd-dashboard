@@ -45,6 +45,10 @@ const ProtectedRoute = ({ children, roles }: TProtectedRoute) => {
         timer: 1500,
       });
       router.push('/');
+    } else if (user?.role === 'admin') {
+      router.push('/dashboard'); 
+    } else if (user?.role === 'user') {
+      router.push('/user-dashboard'); 
     }
   }, [token, roles, user?.role, router]);
 

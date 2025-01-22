@@ -5,11 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import MyFormWrapper from "@/components/ui/MyForm/MyFormWrapper/MyFormWrapper";
 import MyFormInput from "@/components/ui/MyForm/MyFormInput/MyFormInput";
 import { Button } from "@nextui-org/react";
-import DnDInput from "@/components/ui/DnDInput";
+// import DnDInput from "@/components/ui/DnDInput";
 import { driverSchema } from "@/schema/driverSchema"; 
 import { useRouter } from "next/navigation";
 import { useAddProductMutation } from "@/redux/features/products/productsApi"; 
 import { toast } from "sonner";
+import DragAndDropImageUpload from "@/components/ui/DnDInput";
 
 export default function AddProduct() {
   const router = useRouter();
@@ -29,8 +30,8 @@ export default function AddProduct() {
     formData.append("status", data.status);
 
     // Only append the product image if it is provided
-    if (data.productImage && data.productImage[0]) {
-      formData.append("product_image", data.productImage[0]);
+    if (data.productImage && data.productImage) {
+      formData.append("product_image", data.productImage);
     }
 
     // console.log("fo")
@@ -140,7 +141,7 @@ export default function AddProduct() {
         </div>
 
         <div className="col-span-1">
-          <DnDInput
+          <DragAndDropImageUpload
             width="w-full"
             name="productImage"
             label="Product Image"

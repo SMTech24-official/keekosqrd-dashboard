@@ -57,12 +57,46 @@ const usersApi = baseApi.injectEndpoints({
       providesTags: ["payments"], 
     }),
 
+    // get user all votes
+
      getUserAllVotes: build.query({
       query: () => ({
         url: `/users/voting-history`,
         method: "GET",
       }),
       providesTags: ["votes"], 
+    }),
+    // get all winner
+     getAllWinner: build.query({
+      query: () => ({
+        url: `/winers`,
+        method: "GET",
+      }),
+      providesTags: ["winner"], 
+    }),
+// user winner
+     getTotalParticipate: build.query({
+      query: () => ({
+        url: `/user/votes`,
+        method: "GET",
+      }),
+      providesTags: ["votes"], 
+    }),
+// user winner
+     getTotalUserWinner: build.query({
+      query: () => ({
+        url: `/user/winers`,
+        method: "GET",
+      }),
+      providesTags: ["winner"], 
+    }),
+// get all winnerlist
+     getAllWiinerList: build.query({
+      query: () => ({
+        url: `/winers`,
+        method: "GET",
+      }),
+      providesTags: ["winner"], 
     }),
   }),
 });
@@ -74,5 +108,9 @@ export const {
   useGetTotalMembersQuery,
   useGetTotalVotersQuery,
   useGetUserPaymentsQuery,
-  useGetUserAllVotesQuery
+  useGetUserAllVotesQuery,
+  useGetAllWinnerQuery,
+  useGetTotalParticipateQuery,
+  useGetTotalUserWinnerQuery,
+  useGetAllWiinerListQuery
 } = usersApi;

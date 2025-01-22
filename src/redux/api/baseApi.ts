@@ -74,7 +74,8 @@ export const baseApi = createApi({
     "votes",
     "payments",
     "members",
-    "voters"
+    "voters",
+    "winner"
   ],
   endpoints: () => ({}),
 });

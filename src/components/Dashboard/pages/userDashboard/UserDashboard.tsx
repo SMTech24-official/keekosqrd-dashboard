@@ -1,19 +1,18 @@
 "use client";
 
-import coin from "@/assets/coin.png";
-import check from "@/assets/chech.png";
 import member from "@/assets/logo/group-chat.png";
-import { useEffect, useState } from "react";
-import { StaticImageData } from "next/image";
-import { MetricCard } from "../../components/cards/metricCard/MetricCard";
-import {
-  useGetTotalPaymentsQuery,
-  useGetTotalMembersQuery,
-  useGetTotalVotersQuery,
-  useGetUserPaymentsQuery,
-} from "@/redux/features/users/usersApi";
 import TransactionTable from "@/components/ui/tables/TransactionTable";
 import { transactionTableHeaders } from "@/constants/transactionTableHeaders";
+import {
+  useGetTotalParticipateQuery,
+  useGetTotalUserWinnerQuery,
+  useGetUserPaymentsQuery,
+} from "@/redux/features/users/usersApi";
+import { StaticImageData } from "next/image";
+import { ReactNode } from "react";
+import { useEffect, useState } from "react";
+import { MetricCard } from "../../components/cards/metricCard/MetricCard";
+import { GiPodiumWinner } from "react-icons/gi";
 // import { useGetAllPaymentsQuery } from "@/redux/features/payment/paymentApi";
 import { formatDate } from "@/utils/formatDate";
 // import TablePagination from "@/components/ui/tables/TablePagination";
@@ -33,20 +32,18 @@ export default function Dashboard() {
   interface Metric {
     title: string;
     value: number;
-    description: string;
-    icon: StaticImageData;
+    icon: ReactNode | StaticImageData;
     change: number;
+    description: string;
   }
 
   const [metricsData, setMetricsData] = useState<Metric[]>([]);
 
   // Fetch total payments, members, and voters from the API using hooks
-  const { data: totalPayments, isLoading: isLoadingPayments } =
-    useGetTotalPaymentsQuery({});
-  const { data: totalMembers, isLoading: isLoadingMembers } =
-    useGetTotalMembersQuery({});
-  const { data: totalVoters, isLoading: isLoadingVoters } =
-    useGetTotalVotersQuery({});
+  const { data: totalParticipate, isLoading: isLoadingPayments } =
+    useGetTotalParticipateQuery({});
+  const { data: totalWin, isLoading: isLoadingMembers } =
+    useGetTotalUserWinnerQuery({});
 
   // Fetch payments data for the selected month and year
   const { data: payments, isLoading } = useGetUserPaymentsQuery({});
@@ -75,34 +72,27 @@ export default function Dashboard() {
 
   // Update metricsData once the API data is available
   useEffect(() => {
-    if (totalPayments && totalMembers && totalVoters) {
+    if (totalParticipate && totalWin) {
       setMetricsData([
         {
-          title: "Total Payments",
-          value: totalPayments?.data?.total_payments,
-          change: 0,
-          icon: coin,
-          description: "Total amount of payments",
-        },
-        {
-          title: "Total Members",
-          value: totalMembers?.data?.total_members,
+          title: "Total Participate",
+          value: totalParticipate?.data?.total_votes,
           change: 0,
           icon: member,
           description: "Total number of members",
         },
         {
-          title: "Total Voters",
+          title: "Total Win",
           change: 0,
-          icon: check,
-          value: totalVoters?.data?.total_voters,
+          icon: <GiPodiumWinner />,
+          value: totalWin?.data?.total_winer,
           description: "Total number of voters",
         },
       ]);
     }
-  }, [totalPayments, totalMembers, totalVoters]);
+  }, [totalParticipate, totalWin]);
 
-  if (isLoadingPayments || isLoadingMembers || isLoadingVoters || isLoading) {
+  if (isLoadingPayments || isLoadingMembers || isLoading) {
     return <div>Loading...</div>;
   }
 
