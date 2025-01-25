@@ -15,6 +15,7 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
+    
     // const token = getTokenFromLocalStorage();
     console.log("token",token)
     headers.set("accept", "application/json");

@@ -11,6 +11,7 @@ import logoutIcon from "@/assets/logout.png";
 import { StaticImageData } from "next/image";
 import { IconType } from "react-icons/lib";
 import logo from "@/assets/logo/nav-logo.svg"
+import Cookies from "js-cookie";
 
 export default function MainNavLink({
   user,
@@ -46,6 +47,7 @@ export default function MainNavLink({
 
   const handleLogout = async () => {
     await logoutHandler(dispatch, router);
+    Cookies.remove("token");
   };
   return (
     <div className="flex flex-col min-h-screen bg-white">

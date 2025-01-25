@@ -30,7 +30,7 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
       autoTable(doc, {
         head: [headers],
         body: tableData.map((item) => [
-          item.profile_image || "N/A",
+          "N/A",
           item.first_name + " " + item.last_name,
           item.email || "N\A",
           item.address || "N\A",

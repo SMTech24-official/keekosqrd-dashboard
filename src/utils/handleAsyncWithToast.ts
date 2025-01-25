@@ -3,6 +3,7 @@
 import { setUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { verifyToken } from "./verifyToken";
+// import Cookies from "js-cookie";
 
 // Now handleAsyncWithToast accepts dispatch as an argument
 export const handleAsyncWithToast = async (
@@ -28,11 +29,10 @@ export const handleAsyncWithToast = async (
       // If isSetUserToRedux is true, dispatch the setUser action
       if (isSetUserToRedux && dispatch && res?.data?.data?.token) {
         const user = await verifyToken(res?.data?.data?.token);
-        await dispatch(
-          setUser({ user: user, token: res?.data?.data?.token })
-        );
+        await dispatch(setUser({ user: user, token: res?.data?.data?.token }));
         // dispatch(setUser({ user: res.data.user, token: res.data.accessToken }));
       }
+      // Cookies.set("token", res?.data?.data?.token);
 
       // Redirect if redirectTo is provided
       if (redirectTo && router) {
