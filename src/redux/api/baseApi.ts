@@ -1,8 +1,4 @@
-import {
-  createApi,
-  fetchBaseQuery,
- 
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 // import { logout, setUser } from "../features/auth/authSlice";
 //192.168.11.51:3007/api/v1
@@ -15,9 +11,9 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    
+    // check
     // const token = getTokenFromLocalStorage();
-    console.log("token",token)
+    console.log("token", token);
     headers.set("accept", "application/json");
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
@@ -76,7 +72,7 @@ export const baseApi = createApi({
     "payments",
     "members",
     "voters",
-    "winner"
+    "winner",
   ],
   endpoints: () => ({}),
 });
