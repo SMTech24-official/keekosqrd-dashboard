@@ -13,6 +13,7 @@ const baseQuery = fetchBaseQuery({
     const token = (getState() as RootState).auth.token;
     // check
     // const token = getTokenFromLocalStorage();
+    // const token = getTokenFromLocalStorage();
     console.log("token", token);
     headers.set("accept", "application/json");
     if (token) {
