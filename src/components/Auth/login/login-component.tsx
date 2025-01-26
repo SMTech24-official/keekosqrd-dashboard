@@ -2,15 +2,15 @@
 "use client";
 import MyFormInput from "@/components/ui/MyForm/MyFormInput/MyFormInput";
 import MyFormWrapper from "@/components/ui/MyForm/MyFormWrapper/MyFormWrapper";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { handleAsyncWithToast } from "@/utils/handleAsyncWithToast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/react";
-import Link from "next/link";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import AuthLayout from "../AuthLayout";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
 
 const validationSchema = z.object({
   email: z
@@ -36,7 +36,10 @@ const LoginComponent = () => {
       router
     );
 
-    console.log("res ", res)
+    console.log("res ", res);
+    const token = res?.data?.data?.token;
+    Cookies.set("token", token);
+    console.log("token in login", token);
   };
 
   return (
@@ -71,19 +74,18 @@ const LoginComponent = () => {
                 value={"12345678"}
               />
             </div>
-            <div className="flex items-center justify-end gap-2 text-xs font-medium">
+            {/* <div className="flex items-center justify-end gap-2 text-xs font-medium">
               <Link href="/forgot-password" className="text-[#5F7992]">
                 Forgot Password?
               </Link>
               
-            </div>
+            </div> */}
             <Button
               className="w-fit mx-auto py-3 rounded-lg bg-grey text-default text-base font-normal leading-6 mb-5"
               type="submit"
             >
               Login
             </Button>
-            
           </MyFormWrapper>
         </div>
       </AuthLayout>

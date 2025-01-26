@@ -30,7 +30,7 @@ export default function AddProduct() {
     formData.append("status", data.status);
 
     // Only append the product image if it is provided
-    if (data.productImage && data.productImage) {
+    if (data.productImage) {
       formData.append("product_image", data.productImage);
     }
 
