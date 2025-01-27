@@ -25,7 +25,7 @@ const LoginComponent = () => {
   const router = useRouter();
 
   const handleSubmit = async (formData: any) => {
-    const res = await handleAsyncWithToast(
+     await handleAsyncWithToast(
       async () => login(formData),
       "Logging in...",
       "Login successful!",
