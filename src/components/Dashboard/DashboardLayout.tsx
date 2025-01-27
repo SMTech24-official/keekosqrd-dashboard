@@ -7,7 +7,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineCheckSquare,
   AiOutlineProduct,
-  AiOutlineTransaction,
   AiOutlineUser,
 } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
