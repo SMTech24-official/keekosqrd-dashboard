@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { handleAsyncWithToast } from "@/utils/handleAsyncWithToast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/react";
-import Cookies from "js-cookie";
+
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import AuthLayout from "../AuthLayout";
@@ -36,10 +36,10 @@ const LoginComponent = () => {
       router
     );
 
-    console.log("res ", res);
-    const token = res?.data?.data?.token;
-    Cookies.set("token", token);
-    console.log("token in login", token);
+    // console.log("res login", res);
+    // const token = res?.data?.data?.token;
+    // Cookies.set("token", token);
+    // console.log("token in login", token);
   };
 
   return (

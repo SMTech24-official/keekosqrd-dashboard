@@ -11,9 +11,9 @@ export function middleware(request: NextRequest) {
   // const loginRoute = `${request.nextUrl.origin}/login`;
   const homeRoute = `${request.nextUrl.origin}`;
   // const dashboardRoute = `${request.nextUrl.origin}/dashboard`;
-  const userRoutes =["/user-dashboard",'/profile','/vote-history']
+  const userRoutes =[""]
 
-  const adminRoutes = [ "/dashboard"]
+  const adminRoutes = [ ""]
 
 
   const token = request.cookies.get('token')?.value;
@@ -45,7 +45,7 @@ console.log(userInfo);
 
 export const config = {
   matcher: [
-    "/dashoboard"
+    ""
   ], 
 };
 
