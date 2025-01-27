@@ -64,7 +64,7 @@ TableProps) {
                   <td className="px-4 py-4 first:pl-6">
                     <div className="flex items-center gap-3">
                       <Image
-                        src={`http://10.0.20.59:8001/storage/${item?.product_image}` || nikshoes}
+                        src={`http://104.248.113.165:8003/storage/${item?.product_image}` || nikshoes}
                         alt={"image"}
                         width={40}
                         height={40}

@@ -63,11 +63,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       icon: CgProfile,
       roles: ["admin", "user"],
     },
-    {
-      name: "Transaction History",
-      href: "/transaction-history",
-      icon: AiOutlineTransaction,
-    },
+    // {
+    //   name: "Transaction History",
+    //   href: "/transaction-history",
+    //   icon: AiOutlineTransaction,
+    // },
     {
       name: "Vote History",
       href: "/vote-history",

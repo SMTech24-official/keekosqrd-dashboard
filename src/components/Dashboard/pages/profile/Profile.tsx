@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { FaEdit } from "react-icons/fa";
-import Image from "next/image";
 import {
   useGetMeUserQuery,
   useUpdateUserProfileMutation,
 } from "@/redux/features/profile/profileApi";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { FaEdit } from "react-icons/fa";
 import { toast } from "sonner";
 
 const Profile = () => {
@@ -132,7 +132,7 @@ const Profile = () => {
           </div>
         ) : (
           <Image
-            src={`http://10.0.20.59:8001/storage/${userInfo.profile_image}`}
+            src={`http://104.248.113.165:8003/storage/${userInfo.profile_image}`}
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover"
             width={80}

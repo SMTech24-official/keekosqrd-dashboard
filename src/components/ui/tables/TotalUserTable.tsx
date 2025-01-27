@@ -71,7 +71,7 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={`http://10.0.20.59:8001/storage/${item.profile_image}` || profile}
+                      src={`http://104.248.113.165:8003/storage/${item.profile_image}` || profile}
                       alt={item.name}
                       width={40}
                       height={40}

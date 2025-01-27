@@ -3,7 +3,7 @@ import { RootState } from "../store";
 // import { logout, setUser } from "../features/auth/authSlice";
 //192.168.11.51:3007/api/v1
 // baseUrl: "https://api-kumba.code-commando.com/api/v1",
-const BaseUrl = "http://104.248.113.165:8003/api";
+const BaseUrl = "https://api.ksquaredsourcedcity.com/api";
 // const BaseUrl = "http://192.168.11.109:5000/api/v1";
 
 const baseQuery = fetchBaseQuery({
