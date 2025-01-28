@@ -13,22 +13,16 @@ import { CgProfile } from "react-icons/cg";
 import { GiPodiumWinner } from "react-icons/gi";
 import { MdManageHistory, MdOutlineHistory } from "react-icons/md";
 import SideBar from "./components/navigationBar/SiderBar";
-// import { cookies } from "next/headers";
-// import { useGetMeUserQuery } from "@/redux/features/profile/profileApi";
-// import serviceIcon from "@/assets/NavIcons/all-service.svg";
-// import couponIcon from "@/assets/NavIcons/coupon.svg";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  // Get the user information from Redux store
   const user = useAppSelector(selectCurrentUser);
-  // console.log("user", user)
-  // const token = Cookies.get("toekn") ;
-  // console.log("token", token)
-  // const role = user?.role || '';
-  // console.log("user dashboard",role)
+  const role = user?.role || "";
+
+  // Decode the JWT token to get user role
+
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
-  // const {data} = useGetMeUserQuery({})
-  // console.log("me user", data)
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -43,6 +37,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     };
   }, [navRef]);
 
+  // Navigation links with roles
   const navLink = [
     {
       name: "Dashboard",
@@ -62,11 +57,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       icon: CgProfile,
       roles: ["admin", "user"],
     },
-    // {
-    //   name: "Transaction History",
-    //   href: "/transaction-history",
-    //   icon: AiOutlineTransaction,
-    // },
     {
       name: "Vote History",
       href: "/vote-history",
@@ -99,25 +89,30 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
-  // const filteredMenuItems = navLink.filter((item) =>
-  //   item.roles?.includes(role)
-  // );
+  // Filter the menu items based on the user's role
+  const filteredMenuItems = navLink.filter((item) =>
+    item.roles.includes(role as string)
+  );
+  console.log(filteredMenuItems);
 
   return (
     <div className="flex">
+      {/* Sidebar */}
       <div className="max-h-screen h-full sticky top-0 z-50">
         <SideBar
-          navLink={navLink}
+          navLink={filteredMenuItems} // Pass the filtered links based on role
           isOpen={isOpen}
           user={user}
           navRef={navRef}
         />
       </div>
+
+      {/* Main Content */}
       <div className="w-full">
         <div className="sticky top-0 z-40">
           <TopBar setIsOpen={setIsOpen} isOpen={isOpen} />
         </div>
-        <div className="bg-[#F6F6F6] min-h-screen"> {children}</div>
+        <div className="bg-[#F6F6F6] min-h-screen">{children}</div>
       </div>
     </div>
   );

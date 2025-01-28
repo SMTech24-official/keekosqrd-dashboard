@@ -28,8 +28,8 @@ export const handleAsyncWithToast = async (
 
       // If isSetUserToRedux is true, dispatch the setUser action
       if (isSetUserToRedux && dispatch && res?.data?.data?.token) {
-        const user = await verifyToken(res?.data?.data?.token);
-        await dispatch(setUser({ user: user, token: res?.data?.data?.token }));
+        const user = verifyToken(res?.data?.data?.token);
+        dispatch(setUser({ user: user, token: res?.data?.data?.token }));
         // dispatch(setUser({ user: res.data.user, token: res.data.accessToken }));
       }
       console.log("res login", res);

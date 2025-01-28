@@ -1,38 +1,24 @@
 "use client";
 
-import coin from "@/assets/coin.png";
 import check from "@/assets/chech.png";
+import coin from "@/assets/coin.png";
 import member from "@/assets/logo/group-chat.png";
-import { useEffect, useState } from "react";
-import { StaticImageData } from "next/image";
-import { MetricCard } from "../../components/cards/metricCard/MetricCard";
-import { useGetTotalPaymentsQuery, useGetTotalMembersQuery, useGetTotalVotersQuery } from "@/redux/features/users/usersApi";
+import TablePagination from "@/components/ui/tables/TablePagination";
 import TransactionTable from "@/components/ui/tables/TransactionTable";
 import { transactionTableHeaders } from "@/constants/transactionTableHeaders";
+import { Metric } from "@/interface/metric";
 import { useGetAllPaymentsQuery } from "@/redux/features/payment/paymentApi";
+import {
+  useGetTotalMembersQuery,
+  useGetTotalPaymentsQuery,
+  useGetTotalVotersQuery,
+} from "@/redux/features/users/usersApi";
 import { formatDate } from "@/utils/formatDate";
-import TablePagination from "@/components/ui/tables/TablePagination";
-
-// Helper function to generate month options
-const generateMonthOptions = (): { label: string; value: number }[] => {
-  const options = [];
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(0, i);
-    options.push({ label: date.toLocaleString("default", { month: "long" }), value: i + 1 });
-  }
-  return options;
-};
+import { generateMonthOptions } from "@/utils/generateMonthOptions";
+import { useEffect, useState } from "react";
+import { MetricCard } from "../../components/cards/metricCard/MetricCard";
 
 export default function Dashboard() {
-  // Use state to store the API response data
-  interface Metric {
-    title: string;
-    value: number,
-    description: string;
-    icon: StaticImageData;
-    change: number;
-  }
-
   const [metricsData, setMetricsData] = useState<Metric[]>([]);
 
   const currentDate = new Date();
@@ -43,9 +29,12 @@ export default function Dashboard() {
   const [selectedYear, setSelectedYear] = useState(currentYear);
 
   // Fetch total payments, members, and voters from the API using hooks
-  const { data: totalPayments, isLoading: isLoadingPayments } = useGetTotalPaymentsQuery({});
-  const { data: totalMembers, isLoading: isLoadingMembers } = useGetTotalMembersQuery({});
-  const { data: totalVoters, isLoading: isLoadingVoters } = useGetTotalVotersQuery({});
+  const { data: totalPayments, isLoading: isLoadingPayments } =
+    useGetTotalPaymentsQuery({});
+  const { data: totalMembers, isLoading: isLoadingMembers } =
+    useGetTotalMembersQuery({});
+  const { data: totalVoters, isLoading: isLoadingVoters } =
+    useGetTotalVotersQuery({});
 
   // Fetch payments data for the selected month and year
   const { data: payments, isLoading } = useGetAllPaymentsQuery({
@@ -61,7 +50,10 @@ export default function Dashboard() {
   const itemsPerPage = 8;
   const totalPages = Math.ceil(transactionData?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = transactionData.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedData = transactionData.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   interface Payment {
     created_at: string;
@@ -72,10 +64,12 @@ export default function Dashboard() {
     formattedCreatedAt: string;
   }
 
-  const formattedData: FormattedPayment[] = paginatedData.map((payment: Payment) => ({
-    ...payment,
-    formattedCreatedAt: formatDate(payment.created_at),
-  }));
+  const formattedData: FormattedPayment[] = paginatedData.map(
+    (payment: Payment) => ({
+      ...payment,
+      formattedCreatedAt: formatDate(payment.created_at),
+    })
+  );
 
   // Update metricsData once the API data is available
   useEffect(() => {
@@ -119,7 +113,9 @@ export default function Dashboard() {
       </div>
       <div className="mt-8 relative">
         <div className="flex items-center justify-between">
-          <h1 className="text-default text-[25px] font-semibold mb-6">Transaction History</h1>
+          <h1 className="text-default text-[25px] font-semibold mb-6">
+            Transaction History
+          </h1>
           <div>
             {/* Filter by Month and Year */}
             <div className="flex items-center gap-4 mb-6">
@@ -144,11 +140,13 @@ export default function Dashboard() {
                 onChange={(e) => setSelectedYear(Number(e.target.value))}
                 className="appearance-none bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-gray-300"
               >
-                {Array.from({ length: 5 }, (_, i) => currentYear - i).map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
+                {Array.from({ length: 5 }, (_, i) => currentYear - i).map(
+                  (year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  )
+                )}
               </select>
             </div>
           </div>
