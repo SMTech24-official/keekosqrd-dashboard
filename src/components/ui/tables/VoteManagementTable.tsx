@@ -5,6 +5,7 @@ import { TableProps } from "@/interface/table.type";
 import profile from "@/assets/logo/profileee.png";
 import { useSelectWinnerMutation } from "@/redux/features/Votes/votesApi"; 
 import { toast } from "sonner";
+import { useState } from "react";
 
 export default function VoteManagementTable({
   tableHeader,
@@ -14,10 +15,12 @@ export default function VoteManagementTable({
   // Use the mutation hook to select a winner
   const [selectWinner, { isLoading, isError, error, isSuccess }] =
     useSelectWinnerMutation();
+    const [selectedWinners, setSelectedWinners] = useState<{ [key: string]: boolean }>({});
 
   const dateFormat = new Date();
   const month = dateFormat && dateFormat.getMonth() + 1; 
   const year = dateFormat && dateFormat.getFullYear(); 
+
   interface SelectWinnerParams {
     userId: string;
     month: number;
@@ -27,6 +30,7 @@ export default function VoteManagementTable({
   const handleSelect = async (userId: string): Promise<void> => {
     try {
       // Call the API to select the winner with userId, month, and year
+      setSelectedWinners((prev) => ({ ...prev, [userId]: true }));
       await selectWinner({
         userId,
         month,
@@ -40,6 +44,7 @@ export default function VoteManagementTable({
       } else {
         toast.error("An unknown error occurred");
       }
+      setSelectedWinners((prev) => ({ ...prev, [userId]: false }));
     }
   };
 
@@ -61,6 +66,7 @@ export default function VoteManagementTable({
           </thead>
           <tbody>
             {tableData.map((item) => {
+              const isWinner = !!selectedWinners[item?.votes?.product_id];
               return (
                 <tr key={item.id} className="border-b border-gray">
                   <td className="px-4 py-4 first:pl-6">
@@ -96,9 +102,13 @@ export default function VoteManagementTable({
                     <button
                       onClick={() => handleSelect(item?.votes?.product_id)}
                       className="border border-grey px-6 py-2 bg-transparent rounded-lg text-default font-semibold"
-                      disabled={isLoading}
+                      disabled={isWinner || isLoading}
                     >
-                      {isLoading ? "Selecting..." : "Winner"}
+                      {isWinner
+                        ? "Winner"
+                        : isLoading && selectedWinners[item?.votes?.product_id]
+                        ? "Selecting..."
+                        : "Select"}
                     </button>
                   </td>
                 </tr>
