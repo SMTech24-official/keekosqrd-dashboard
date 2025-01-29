@@ -6,6 +6,7 @@ import { TableProps } from "@/interface/table.type";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import profile from "@/assets/logo/profileee.png";
+import { toast } from "sonner";
 
 export default function WinnerHistoryTable({
   tableHeader,
@@ -33,12 +34,12 @@ export default function WinnerHistoryTable({
       autoTable(doc, {
         head: [headers],
         body: tableData.map((item) => [
-          item?.user?.profile_image || "N/A",
+          "N/A",
           item?.user?.first_name + " " + item?.user?.last_name,
           item?.user?.email || "NA",
           item?.user?.address || "NA",
           "Winner",
-          item?.user?.formattedCreatedAt || "N/A",
+          item.formattedCreatedAt || "N/A",
         ]),
         startY: yOffset,
         theme: "grid",
@@ -46,8 +47,10 @@ export default function WinnerHistoryTable({
 
       // Save PDF
       doc.save("users_export.pdf");
+      toast.success("Table exported successfully!");
     } catch (error) {
       console.error("Export failed:", error);
+      toast.error("Error exporting table");
     }
   };
 

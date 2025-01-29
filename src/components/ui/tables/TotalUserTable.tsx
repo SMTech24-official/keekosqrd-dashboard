@@ -6,6 +6,7 @@ import { TableProps } from "@/interface/table.type";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import profile from "@/assets/logo/profileee.png"
+import { toast } from "sonner";
 
 export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
   const [, { isLoading }] = useExportUsersMutation();
@@ -44,8 +45,10 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
 
       // Save PDF
       doc.save("users_export.pdf");
+      toast.success("Table exported successfully!");
     } catch (error) {
       console.error("Export failed:", error);
+      toast.error("Error exporting table");
     }
   };
 

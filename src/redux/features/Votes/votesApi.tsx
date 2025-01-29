@@ -13,10 +13,9 @@ const votesApi = baseApi.injectEndpoints({
 
     // Post method for selecting a winner
     selectWinner: build.mutation({
-      query: ({ userId, month, year }) => ({
-        url: `/make-winner/${userId}/${month}/${year}`,
+      query: ({ id, month, year }) => ({
+        url: `/make-winer/${id}/${month}/${year}`,
         method: "POST", 
-        body: { userId, month, year }, 
       }),
       invalidatesTags: ["votes"], 
     }),

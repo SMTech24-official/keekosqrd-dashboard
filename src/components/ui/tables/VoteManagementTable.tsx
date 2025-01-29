@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { TableProps } from "@/interface/table.type";
 import profile from "@/assets/logo/profileee.png";
-import { useSelectWinnerMutation } from "@/redux/features/Votes/votesApi"; 
+import { useSelectWinnerMutation } from "@/redux/features/Votes/votesApi";
 import { toast } from "sonner";
 import { useState } from "react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 interface SelectWinnerParams {
-  userId: string;
+  id: string;
   month: number;
   year: number;
 }
@@ -16,28 +18,25 @@ interface SelectWinnerParams {
 export default function VoteManagementTable({
   tableHeader,
   tableData,
-  // isDelete = false,
 }: TableProps) {
-  // Use the mutation hook to select a winner
   const [selectWinner, { isLoading, isError, error, isSuccess }] =
     useSelectWinnerMutation();
-    const [selectedWinners, setSelectedWinners] = useState<{ [key: string]: boolean }>({});
+  const [selectedWinners, setSelectedWinners] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const dateFormat = new Date();
-  const month = dateFormat && dateFormat.getMonth() + 1; 
-  const year = dateFormat && dateFormat.getFullYear(); 
+  const month = dateFormat.getMonth() + 1;
+  const year = dateFormat.getFullYear();
 
- 
-
-  const handleSelect = async (userId: string): Promise<void> => {
+  const handleSelect = async (id: string): Promise<void> => {
     try {
-      // Call the API to select the winner with userId, month, and year
-      setSelectedWinners((prev) => ({ ...prev, [userId]: true }));
+      setSelectedWinners((prev) => ({ ...prev, [id]: true }));
       await selectWinner({
-        userId,
+        id,
         month,
         year,
-      } as SelectWinnerParams).unwrap(); // unwrap to handle the response
+      } as SelectWinnerParams).unwrap();
       toast.success("Winner selected successfully!");
     } catch (error) {
       console.error("Error selecting winner:", error);
@@ -46,7 +45,45 @@ export default function VoteManagementTable({
       } else {
         toast.error("An unknown error occurred");
       }
-      setSelectedWinners((prev) => ({ ...prev, [userId]: false }));
+      setSelectedWinners((prev) => ({ ...prev, [id]: false }));
+    }
+  };
+
+  const handleExport = () => {
+    try {
+      const doc = new jsPDF();
+
+      // Title
+      doc.setFontSize(18);
+      doc.text("Vote Management Table Export", 14, 22);
+
+      // Table headers and data
+      const headers = tableHeader.map((header) => header.label);
+      const data = tableData.map((item) => [
+        "N/A",
+        item?.user?.first_name + " " + item?.user?.last_name,
+        item?.user?.email || "N/A",
+        item?.product?.product_name || "N/A",
+        item?.product?.brand_name || "N/A",
+        item.payment_method || "N/A",
+        item.formattedCreatedAt || "N/A",
+        selectedWinners[item?.id] ? "Winner" : "Not Selected",
+      ]);
+
+      // Generate table
+      autoTable(doc, {
+        head: [headers],
+        body: data,
+        startY: 30,
+        theme: "grid",
+      });
+
+      // Save the PDF
+      doc.save("vote_management_table.pdf");
+      toast.success("Table exported successfully!");
+    } catch (error) {
+      console.error("Error exporting table:", error);
+      toast.error("Error exporting table");
     }
   };
 
@@ -68,8 +105,7 @@ export default function VoteManagementTable({
           </thead>
           <tbody>
             {tableData.map((item) => {
-              console.log("id", item?.user_id);
-              const isWinner = !!selectedWinners[item?.user_id];
+              const isWinner = !!selectedWinners[item?.id];
               return (
                 <tr key={item.id} className="border-b border-gray">
                   <td className="px-4 py-4 first:pl-6">
@@ -103,13 +139,13 @@ export default function VoteManagementTable({
                   </td>
                   <td>
                     <button
-                      onClick={() => handleSelect(item?.user_id)}
+                      onClick={() => handleSelect(item?.id)}
                       className="border border-grey px-6 py-2 bg-transparent rounded-lg text-default font-semibold"
                       disabled={isWinner || isLoading}
                     >
                       {isWinner
                         ? "Winner"
-                        : isLoading && selectedWinners[item?.user_id]
+                        : isLoading && selectedWinners[item?.id]
                         ? "Selecting..."
                         : "Select"}
                     </button>
@@ -122,7 +158,10 @@ export default function VoteManagementTable({
       </div>
 
       <div className="flex items-center justify-end mt-6">
-        <button className="bg-grey text-default px-6 py-3 rounded-md">
+        <button
+          onClick={handleExport}
+          className="bg-grey text-default px-6 py-3 rounded-md"
+        >
           Export
         </button>
       </div>
@@ -131,7 +170,9 @@ export default function VoteManagementTable({
       {isSuccess && <div className="mt-4 text-green-500">Winner selected!</div>}
       {isError && (
         <div className="mt-4 text-red-500">
-          {error && 'data' in error ? (error.data as { message: string }).message : "An error occurred"}
+          {error && "data" in error
+            ? (error.data as { message: string }).message
+            : "An error occurred"}
         </div>
       )}
     </div>
