@@ -7,19 +7,9 @@ import VoteManagementTable from "@/components/ui/tables/VoteManagementTable";
 import { votesTableHeaders } from "@/constants/totalVoteManagementData";
 import { useGetAllVotesQuery } from "@/redux/features/Votes/votesApi";
 import { formatDate } from "@/utils/formatDate";
+import { generateMonthOptions } from "@/utils/generateMonthOptions";
 
-// Helper function to generate month options
-const generateMonthOptions = (): { label: string; value: number }[] => {
-  const options = [];
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(0, i);
-    options.push({
-      label: date.toLocaleString("default", { month: "long" }),
-      value: i + 1,
-    });
-  }
-  return options;
-};
+
 
 export default function VoteManagement() {
   // Current year and month as default

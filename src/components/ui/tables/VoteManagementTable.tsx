@@ -7,6 +7,12 @@ import { useSelectWinnerMutation } from "@/redux/features/Votes/votesApi";
 import { toast } from "sonner";
 import { useState } from "react";
 
+interface SelectWinnerParams {
+  userId: string;
+  month: number;
+  year: number;
+}
+
 export default function VoteManagementTable({
   tableHeader,
   tableData,
@@ -21,11 +27,7 @@ export default function VoteManagementTable({
   const month = dateFormat && dateFormat.getMonth() + 1; 
   const year = dateFormat && dateFormat.getFullYear(); 
 
-  interface SelectWinnerParams {
-    userId: string;
-    month: number;
-    year: number;
-  }
+ 
 
   const handleSelect = async (userId: string): Promise<void> => {
     try {
@@ -66,7 +68,8 @@ export default function VoteManagementTable({
           </thead>
           <tbody>
             {tableData.map((item) => {
-              const isWinner = !!selectedWinners[item?.votes?.product_id];
+              console.log("id", item?.user_id);
+              const isWinner = !!selectedWinners[item?.user_id];
               return (
                 <tr key={item.id} className="border-b border-gray">
                   <td className="px-4 py-4 first:pl-6">
@@ -100,13 +103,13 @@ export default function VoteManagementTable({
                   </td>
                   <td>
                     <button
-                      onClick={() => handleSelect(item?.votes?.product_id)}
+                      onClick={() => handleSelect(item?.user_id)}
                       className="border border-grey px-6 py-2 bg-transparent rounded-lg text-default font-semibold"
                       disabled={isWinner || isLoading}
                     >
                       {isWinner
                         ? "Winner"
-                        : isLoading && selectedWinners[item?.votes?.product_id]
+                        : isLoading && selectedWinners[item?.user_id]
                         ? "Selecting..."
                         : "Select"}
                     </button>
