@@ -29,7 +29,7 @@ export default function VoteHistory() {
 
   const { data } = useGetUserAllVotesQuery({})
   console.log("data", data)
-  const userVotes = data?.data?.votes || [];
+  const userVotes = data?.data?.votes.product || [];
   console.log("user votes", userVotes)
   // console.log(userVotess)
   const [currentPage, setCurrentPage] = useState(1);

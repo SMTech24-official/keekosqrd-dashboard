@@ -34,7 +34,7 @@ export default function VoteHistoryTable({
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={`item.profile_image || profile`}
+                      src={`item.product_image || profile`}
                       alt={item.name}
                       width={40}
                       height={40}
@@ -43,11 +43,11 @@ export default function VoteHistoryTable({
                   </div>
                 </td>
                 <td className="px-4 py-4 text-gray-500">
-                  {item.first_name} {item.last_name}
+                  {item.product_name}
                 </td>
                 <td className="px-4 py-4 text-[#131D26]">{item.email}</td>
                 <td className="px-4 py-4 text-gray-500">
-                  {item.payment_method || "N/A"}
+                  {item.brand_name}
                 </td>
                 <td className="px-4 py-4 text-gray-500">
                   <span
