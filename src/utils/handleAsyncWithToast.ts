@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { setUser } from "@/redux/features/auth/authSlice";
-import { toast } from "sonner";
-import { verifyToken } from "./verifyToken";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
+import { toast } from "sonner";
 
 // Now handleAsyncWithToast accepts dispatch as an argument
 export const handleAsyncWithToast = async (
@@ -12,9 +11,9 @@ export const handleAsyncWithToast = async (
   loadingMessage: string,
   successMessage?: string,
   errorMessage?: string,
-  isSetUserToRedux: boolean = false, 
+  isSetUserToRedux: boolean = false,
   dispatch?: any,
-  redirectTo?: string, 
+  redirectTo?: string,
   router?: any // Accept the router instance as a parameter
 ) => {
   const toastInit = toast.loading(loadingMessage);
@@ -30,7 +29,7 @@ export const handleAsyncWithToast = async (
       // If isSetUserToRedux is true, dispatch the setUser action
       console.log("role", res?.data?.data?.role);
       if (isSetUserToRedux && dispatch && res?.data?.data?.token) {
-        const user = jwtDecode(res?.data?.data?.token); 
+        const user = jwtDecode(res?.data?.data?.token);
         dispatch(setUser({ user: user, token: res?.data?.data?.token }));
       }
       console.log("res login", res);
@@ -39,14 +38,12 @@ export const handleAsyncWithToast = async (
       console.log("token in login", token);
 
       // Redirect based on the decoded token role
-      const decodedToken: any = jwtDecode(token); 
+      const decodedToken: any = jwtDecode(token);
       if (decodedToken?.role === "user") {
-       
         if (router) {
           router.push("/user-dashboard");
         }
       } else {
-        
         if (redirectTo && router) {
           router.push(redirectTo);
         }
