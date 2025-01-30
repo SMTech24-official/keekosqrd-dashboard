@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { useExportUsersMutation } from "@/redux/features/users/usersApi";
+import profile from "@/assets/logo/profileee.png";
 import { TableProps } from "@/interface/table.type";
+import { useExportUsersMutation } from "@/redux/features/users/usersApi";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import profile from "@/assets/logo/profileee.png"
+import Image from "next/image";
 import { toast } from "sonner";
 
 export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
@@ -24,7 +24,7 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
 
       // Add table headers
       const headers = tableHeader.map((header) => header.label);
-      const yOffset = 30; 
+      const yOffset = 30;
 
       // Headers and table data
 
@@ -33,8 +33,8 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
         body: tableData.map((item) => [
           "N/A",
           item.first_name + " " + item.last_name,
-          item.email || "N\A",
-          item.address || "N\A",
+          item.email || "NA",
+          item.address || "NA",
           item.payment_method || "N/A",
           item.status ? "Active" : "Inactive",
           item.formattedCreatedAt || "N/A",
@@ -74,7 +74,10 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={`http://104.248.113.165:8003/storage/${item.profile_image}` || profile}
+                      src={
+                        `https://api.ksquaredsourcedcity.com/storage/${item.profile_image}` ||
+                        profile
+                      }
                       alt={item.name}
                       width={40}
                       height={40}
@@ -85,8 +88,12 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
                 <td className="px-4 py-4 text-gray-500">
                   {item.first_name || "N/A"} {item.last_name || "N/A"}
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">{item.email || "N/A"}</td>
-                <td className="px-4 py-4 text-[#131D26]">{item.address || "N/A"}</td>
+                <td className="px-4 py-4 text-[#131D26]">
+                  {item.email || "N/A"}
+                </td>
+                <td className="px-4 py-4 text-[#131D26]">
+                  {item.address || "N/A"}
+                </td>
                 <td className="px-4 py-4 text-gray-500">
                   {item.payment_method || "N/A"}
                 </td>

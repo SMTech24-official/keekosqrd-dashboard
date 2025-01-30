@@ -77,7 +77,7 @@ export default function WinnerHistoryTable({
                   <div className="flex items-center gap-3">
                     <Image
                       src={
-                        `http://10.0.20.59:8001/storage/${item?.user?.profile_image}` ||
+                        `https://api.ksquaredsourcedcity.com//storage/${item?.user?.profile_image}` ||
                         profile
                       }
                       alt={item?.user?.name}

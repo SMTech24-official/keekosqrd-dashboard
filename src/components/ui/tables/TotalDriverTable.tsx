@@ -1,16 +1,16 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 
 import { TableProps } from "@/interface/table.type";
 
 import Link from "next/link";
 
-import { ToastContainer } from "react-toastify";
 import nikshoes from "@/assets/logo/nike-shoes.jpg";
 import { useDeleteProductMutation } from "@/redux/features/products/productsApi";
+import { ToastContainer } from "react-toastify";
 import { toast } from "sonner";
 
 export default function TotalDriverTable({
@@ -64,7 +64,10 @@ TableProps) {
                   <td className="px-4 py-4 first:pl-6">
                     <div className="flex items-center gap-3">
                       <Image
-                        src={`http://104.248.113.165:8003/storage/${item?.product_image}` || nikshoes}
+                        src={
+                          `https://api.ksquaredsourcedcity.com/storage/${item?.product_image}` ||
+                          nikshoes
+                        }
                         alt={"image"}
                         width={40}
                         height={40}

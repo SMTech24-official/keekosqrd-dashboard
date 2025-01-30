@@ -132,7 +132,7 @@ const Profile = () => {
           </div>
         ) : (
           <Image
-            src={`http://104.248.113.165:8003/storage/${userInfo.profile_image}`}
+            src={`https://api.ksquaredsourcedcity.com/storage/${userInfo.profile_image}`}
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover"
             width={80}

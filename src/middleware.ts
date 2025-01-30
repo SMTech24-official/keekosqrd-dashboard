@@ -8,6 +8,9 @@ interface CustomJwtPayload {
 }
 
 export function middleware(request: NextRequest) {
+    console.log("request", request);
+
+    
   const homeRoute = `${request.nextUrl.origin}/`;
 
   const userRoutes = ["/user-dashboard", "/vote-history"];
