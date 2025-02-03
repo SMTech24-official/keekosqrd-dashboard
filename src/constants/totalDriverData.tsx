@@ -3,11 +3,8 @@ import img from "@/assets/driver_image-two.png";
 export const driverTableHeaders = [
   { label: "Image", key: "iamge" },
   { label: "Product Name", key: "product name" },
-  // { label: "Password", key: "password" },
   { label: "Brand Name", key: "date" },
-  { label: "Price", key: "price" },
   { label: "Model", key: "model" },
-  { label: "Size", key: "size" },
   { label: "Status", key: "status" },
   { label: "Action", key: "action" },
 ];

@@ -12,7 +12,9 @@ import {
 import { CgProfile } from "react-icons/cg";
 import { GiPodiumWinner } from "react-icons/gi";
 import { MdManageHistory, MdOutlineHistory } from "react-icons/md";
+import { IoMdPhotos } from "react-icons/io";
 import SideBar from "./components/navigationBar/SiderBar";
+
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   // Get the user information from Redux store
@@ -85,6 +87,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       name: "Winner History",
       href: "/winner-history",
       icon: GiPodiumWinner,
+      roles: ["admin"],
+    },
+    {
+      name: "Community",
+      href: "/community",
+      icon: IoMdPhotos,
       roles: ["admin"],
     },
   ];

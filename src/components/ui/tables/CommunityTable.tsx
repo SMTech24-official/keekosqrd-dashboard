@@ -9,19 +9,19 @@ import { TableProps } from "@/interface/table.type";
 import Link from "next/link";
 
 import nikshoes from "@/assets/logo/nike-shoes.jpg";
-import { useDeleteProductMutation } from "@/redux/features/products/productsApi";
+import { useDeleteCommunityMutation } from "@/redux/features/community/CommunityApi";
 import { ToastContainer } from "react-toastify";
 import { toast } from "sonner";
 
-export default function TotalDriverTable({
+export default function CommunityTable({
   tableHeader,
   tableData,
 }: // isDelete = false,
 TableProps) {
-  const [deleteProductFn] = useDeleteProductMutation();
+  const [deleteCommunityFn] = useDeleteCommunityMutation();
 
   const handleDelete = async (id: string) => {
-    const response = await deleteProductFn(id).unwrap();
+    const response = await deleteCommunityFn(id).unwrap();
     if (response.status) {
       toast.success("Product Delete Successfully");
     } else {
@@ -32,11 +32,11 @@ TableProps) {
   return (
     <div className="w-full overflow-auto bg-white rounded-lg shadow-md">
       <Link
-        href={"/add-products"}
+        href={"/add-community"}
         className="p-5 flex justify-start sm:justify-end"
       >
         <Button>
-          <Plus className="text-white" /> Add Products
+          <Plus className="text-white" /> Add Community
         </Button>
       </Link>
       <table className="w-full text-sm md:text-base border-y">
@@ -78,23 +78,9 @@ TableProps) {
                   <td className="px-4 py-4 text-gray-500">
                     {item?.product_name}
                   </td>
-                  <td className="px-4 py-4 text-gray-500">
-                    {item?.brand_name}
-                  </td>
-                  {/* <td className="px-4 py-4 text-gray-500">{item?.price}</td> */}
+                  <td className="px-4 py-4 text-gray-500">{item?.brand}</td>
+
                   <td className="px-4 py-4 text-gray-500">{item?.model}</td>
-                  {/* <td className="px-4 py-4 text-gray-500">{item?.size}</td> */}
-                  <td className="px-4 py-4 text-gray-500">
-                    <span
-                      className={`px-3 py-1 text-sm font-medium rounded-full ${
-                        item?.status
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {item?.status ? "Active" : "Inactive"}
-                    </span>
-                  </td>
 
                   <td className="px-4 py-4">
                     <button onClick={() => handleDelete(item?.id)}>
