@@ -10,20 +10,17 @@ export default function AllProducts() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Fetch products data from the backend
-  const { data: result, isLoading } = useGetAllProductsQuery({
-    page: currentPage,
-  });
+  const { data: result, isLoading } = useGetAllProductsQuery({});
 
   // Extract data from the API response
   const products = result?.data?.products?.data || [];
-  const totalPages = result?.data?.products?.last_page || 1;
+  // const totalPages = result?.data?.products?.last_page || 1;
 
-  // Handle page change from the pagination component
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  // pagination
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(products?.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = products.slice(startIndex, startIndex + itemsPerPage);
 
   if (isLoading) {
     return (
@@ -39,14 +36,14 @@ export default function AllProducts() {
         <div className="overflow-x-auto">
           <TotalDriverTable
             tableHeader={driverTableHeaders}
-            tableData={products}
+            tableData={paginatedData}
           />
         </div>
 
         {/* Pagination */}
         <TablePagination
           currentPage={currentPage}
-          setCurrentPage={handlePageChange}
+          setCurrentPage={setCurrentPage}
           totalPages={totalPages}
         />
       </div>

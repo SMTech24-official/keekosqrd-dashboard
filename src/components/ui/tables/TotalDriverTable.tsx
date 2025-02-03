@@ -81,9 +81,7 @@ TableProps) {
                   <td className="px-4 py-4 text-gray-500">
                     {item?.brand_name}
                   </td>
-                  {/* <td className="px-4 py-4 text-gray-500">{item?.price}</td> */}
                   <td className="px-4 py-4 text-gray-500">{item?.model}</td>
-                  {/* <td className="px-4 py-4 text-gray-500">{item?.size}</td> */}
                   <td className="px-4 py-4 text-gray-500">
                     <span
                       className={`px-3 py-1 text-sm font-medium rounded-full ${
