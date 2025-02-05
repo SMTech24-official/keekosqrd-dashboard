@@ -57,7 +57,7 @@ export const handleAsyncWithToast = async (
     }
 
     if (!res?.data?.status) {
-      toast.error(res?.error?.data?.errorSources?.[0]?.message, {
+      toast.error("Login Failed !", {
         id: toastInit,
       });
     }

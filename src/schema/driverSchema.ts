@@ -20,9 +20,9 @@ export const driverSchema = z.object({
 
 // Define the updated product schema
 export const photogallerySchema = z.object({
-  name: z.string().nonempty({ message: "Product name is required" }),
-  brand_name: z.string().nonempty({ message: "Brand name is required" }),
-  model: z.string().nonempty({ message: "Model is required" }),
+  // name: z.string().nonempty({ message: "Product name is required" }),
+  // brand_name: z.string().nonempty({ message: "Brand name is required" }),
+  // model: z.string().nonempty({ message: "Model is required" }),
   description: z.string().optional(), 
   status: z.enum(["true", "false"]).optional(), 
   productImage: z

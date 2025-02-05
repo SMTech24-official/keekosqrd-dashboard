@@ -1,7 +1,7 @@
 "use client";
 
 import check from "@/assets/chech.png";
-import coin from "@/assets/coin.png";
+import coin from "@/assets/logo/pound-symbo.png";
 import member from "@/assets/logo/group-chat.png";
 import TablePagination from "@/components/ui/tables/TablePagination";
 import TransactionTable from "@/components/ui/tables/TransactionTable";

@@ -76,11 +76,27 @@ TableProps) {
                     </div>
                   </td>
                   <td className="px-4 py-4 text-gray-500">
-                    {item?.product_name}
+                    {item?.product_name !== "undefined" &&
+                    item?.product_name !== null &&
+                    item?.product_name !== ""
+                      ? item?.product_name
+                      : "N/A"}
                   </td>
-                  <td className="px-4 py-4 text-gray-500">{item?.brand}</td>
+                  <td className="px-4 py-4 text-gray-500">
+                    {item?.brand !== "undefined" &&
+                    item?.brand !== null &&
+                    item?.brand !== ""
+                      ? item?.brand
+                      : "N/A"}
+                  </td>
 
-                  <td className="px-4 py-4 text-gray-500">{item?.model}</td>
+                  <td className="px-4 py-4 text-gray-500">
+                    {item?.model !== "undefined" &&
+                    item?.model !== null &&
+                    item?.model !== ""
+                      ? item?.model
+                      : "N/A"}
+                  </td>
 
                   <td className="px-4 py-4">
                     <button onClick={() => handleDelete(item?.id)}>
