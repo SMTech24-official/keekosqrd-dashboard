@@ -44,6 +44,7 @@ export default function Dashboard() {
 
   // Ensure payments data exists before trying to access it
   const transactionData = payments?.data?.payments || [];
+  console.log("transcriptData", transactionData)
 
   // Handle pagination
   const [currentPage, setCurrentPage] = useState(1);

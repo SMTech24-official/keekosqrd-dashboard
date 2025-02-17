@@ -36,7 +36,7 @@ export default function TransactionTable({
                   {item.id}
                 </td>
                 <td className="px-4 py-4 text-gray-500">
-                  {item.payment_method || "N/A"}
+                  {item.user?.email || "N/A"}
                 </td>
                 <td className="px-4 py-4 text-[#131D26]">{item.amount}</td>
                 
