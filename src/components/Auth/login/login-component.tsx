@@ -61,7 +61,7 @@ const LoginComponent = () => {
                 labelClassName="mb-1 text-xs font-medium"
                 name="email"
                 placeHolder="Email"
-                value={"admin@test.com"}
+                value={""}
               />
             </div>
             <div className="w-full">
@@ -71,7 +71,7 @@ const LoginComponent = () => {
                 name="password"
                 isPassword
                 placeHolder="Password"
-                value={"12345678"}
+                value={""}
               />
             </div>
             {/* <div className="flex items-center justify-end gap-2 text-xs font-medium">

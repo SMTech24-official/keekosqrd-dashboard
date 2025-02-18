@@ -8,16 +8,22 @@ const votesApi = baseApi.injectEndpoints({
         url: `/votes/${month}/${currentYear}`,
         method: "GET",
       }),
-      providesTags: ["votes"], 
+      providesTags: ["votes"],
     }),
 
     // Post method for selecting a winner
     selectWinner: build.mutation({
       query: ({ id, month, year }) => ({
         url: `/make-winer/${id}/${month}/${year}`,
-        method: "POST", 
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          status: true,
+        },
       }),
-      invalidatesTags: ["votes"], 
+      invalidatesTags: ["votes"],
     }),
   }),
 });

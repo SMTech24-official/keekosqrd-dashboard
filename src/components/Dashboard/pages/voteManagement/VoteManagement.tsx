@@ -9,8 +9,6 @@ import { useGetAllVotesQuery } from "@/redux/features/Votes/votesApi";
 import { formatDate } from "@/utils/formatDate";
 import { generateMonthOptions } from "@/utils/generateMonthOptions";
 
-
-
 export default function VoteManagement() {
   // Current year and month as default
   const currentDate = new Date();
@@ -27,6 +25,7 @@ export default function VoteManagement() {
     currentYear: selectedYear,
   });
   const userVotes = data?.data?.votes || [];
+  console.log("Votes retrieved", userVotes);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);

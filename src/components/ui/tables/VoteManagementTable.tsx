@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useGetAllWiinerListQuery } from "@/redux/features/users/usersApi";
 
 interface SelectWinnerParams {
   id: string;
@@ -40,14 +41,29 @@ export default function VoteManagementTable({
       toast.success("Winner selected successfully!");
     } catch (error) {
       console.error("Error selecting winner:", error);
-      if (error instanceof Error) {
-        toast.error("Error selecting winner: " + error.message);
+
+      // Check for specific error message
+      if (
+        (error as { data?: { error?: string } })?.data?.error ===
+        "A winner has already been selected for this month and year."
+      ) {
+        toast.error(
+          "This winner has already been selected for this month and year."
+        );
       } else {
         toast.error("An unknown error occurred");
       }
+
       setSelectedWinners((prev) => ({ ...prev, [id]: false }));
     }
   };
+
+  const { data } = useGetAllWiinerListQuery({});
+  console.log("data", data);
+  const winnrData = data?.data?.winers || [];
+
+  const VoteManagementId = tableData.map((data) => data.id);
+  console.log("voteManagementData", VoteManagementId);
 
   const handleExport = () => {
     try {
@@ -106,6 +122,10 @@ export default function VoteManagementTable({
           <tbody>
             {tableData.map((item) => {
               const isWinner = !!selectedWinners[item?.id];
+              const isAlreadySelected: boolean = winnrData.some(
+                (winner: { id: string }) => winner?.id === item?.id
+              );
+              console.log("winnselected", isAlreadySelected);
               return (
                 <tr key={item.id} className="border-b border-gray">
                   <td className="px-4 py-4 first:pl-6">
@@ -141,9 +161,9 @@ export default function VoteManagementTable({
                     <button
                       onClick={() => handleSelect(item?.id)}
                       className="border border-grey px-6 py-2 bg-transparent rounded-lg text-default font-semibold"
-                      disabled={isWinner || isLoading}
+                      disabled={isWinner || isLoading || isAlreadySelected}
                     >
-                      {isWinner
+                      {isAlreadySelected
                         ? "Winner"
                         : isLoading && selectedWinners[item?.id]
                         ? "Selecting..."
