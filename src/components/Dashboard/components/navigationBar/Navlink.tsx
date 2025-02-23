@@ -48,6 +48,7 @@ export default function MainNavLink({
   const handleLogout = async () => {
     await logoutHandler(dispatch, router);
     Cookies.remove("token");
+    window.location.reload();
   };
   return (
     <div className="flex flex-col min-h-screen bg-white">

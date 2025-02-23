@@ -5,9 +5,9 @@ export const userTableHeaders = [
   { label: "Name", key: "name" },
   { label: "email", key: "email" },
   { label: "Address", key: "address" },
-  { label: "Payment Method", key: "paymentMethod" },
+  { label: "Date", key: "paymentMethod" },
   { label: "Status", key: "status" },
-  { label: "Date", key: "date" },
+  { label: "Action", key: "date" },
 ];
 
 export const userData = [

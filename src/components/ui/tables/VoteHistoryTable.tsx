@@ -2,15 +2,14 @@
 
 import Image from "next/image";
 // import { useExportUsersMutation } from "@/redux/features/users/usersApi";
-// import profile from "@/assets/logo/profileee.png";
 import { TableProps } from "@/interface/table.type";
 
 export default function VoteHistoryTable({
   tableHeader,
   tableData,
-  // isDelete = false,
-}: TableProps) {
- 
+}: // isDelete = false,
+TableProps) {
+  console.log("tabledata", tableData);
 
   return (
     <div>
@@ -34,7 +33,7 @@ export default function VoteHistoryTable({
                 <td className="px-4 py-4 first:pl-6">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={`item.product_image || profile`}
+                      src={`https://api.ksquaredsourcedcity.com/storage/${item?.product?.product_image}`}
                       alt={item.name}
                       width={40}
                       height={40}
@@ -43,11 +42,14 @@ export default function VoteHistoryTable({
                   </div>
                 </td>
                 <td className="px-4 py-4 text-gray-500">
-                  {item.product_name}
+                  {item?.product?.product_name}
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">{item.email}</td>
+
                 <td className="px-4 py-4 text-gray-500">
-                  {item.brand_name}
+                  {item?.product?.brand_name}
+                </td>
+                <td className="px-4 py-4 text-[#131D26]">
+                  {item.formattedCreatedAt}
                 </td>
                 <td className="px-4 py-4 text-gray-500">
                   <span
@@ -57,7 +59,7 @@ export default function VoteHistoryTable({
                         : "bg-red-100 text-red-800"
                     }`}
                   >
-                    {item?.status ? "Active" : "Inactive"}
+                    {item?.status ? "Winner" : "Not selected"}
                   </span>
                 </td>
                 <td className="px-4 py-4 text-[#131D26]">

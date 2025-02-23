@@ -2,13 +2,19 @@
 
 import profile from "@/assets/logo/profileee.png";
 import { TableProps } from "@/interface/table.type";
-import { useExportUsersMutation } from "@/redux/features/users/usersApi";
+import {
+  useDeleteUserMutation,
+  useExportUsersMutation,
+} from "@/redux/features/users/usersApi";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 
+
 export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
+  console.log("userdata", tableData);
   const [, { isLoading }] = useExportUsersMutation();
 
   const handleExport = async () => {
@@ -49,6 +55,21 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
     } catch (error) {
       console.error("Export failed:", error);
       toast.error("Error exporting table");
+    }
+  };
+
+  // delete user
+  const [deleteUserFn] = useDeleteUserMutation();
+
+  const handleDeleteUser = async ( id : string | number ) => {
+    try {
+      const response = await deleteUserFn(id).unwrap();
+      console.log("delet tuser", response);
+      toast.success("User deleted successfully");
+      console.log(`Deleting user with id: ${id}`);
+    } catch (error) {
+      toast.error("Error deleting user");
+      console.error("Error deleting user", error);
     }
   };
 
@@ -94,8 +115,8 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
                 <td className="px-4 py-4 text-[#131D26]">
                   {item.address || "N/A"}
                 </td>
-                <td className="px-4 py-4 text-gray-500">
-                  {item.payment_method || "N/A"}
+                <td className="px-4 py-4 text-[#131D26]">
+                  {item.formattedCreatedAt || "N/A"}
                 </td>
                 <td className="px-4 py-4 text-gray-500">
                   <span
@@ -108,8 +129,12 @@ export default function TotalUserTable({ tableHeader, tableData }: TableProps) {
                     {item?.status ? "Active" : "Inactive"}
                   </span>
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">
-                  {item.formattedCreatedAt || "N/A"}
+
+                <td className="px-4 py-4">
+                  <button onClick={() => handleDeleteUser(item?.id)}>
+                    {" "}
+                    <Trash2 className="text-red-500 text-center" />
+                  </button>
                 </td>
               </tr>
             ))}

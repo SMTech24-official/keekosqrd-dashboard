@@ -29,7 +29,7 @@ export default function VoteHistory() {
 
   const { data } = useGetUserAllVotesQuery({})
   console.log("data", data)
-  const userVotes = data?.data?.votes.product || [];
+  const userVotes = data?.data?.votes || [];
   console.log("user votes", userVotes)
   // console.log(userVotess)
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,6 +39,7 @@ export default function VoteHistory() {
   const totalPages = Math.ceil(userVotes?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = userVotes.slice(startIndex, startIndex + itemsPerPage);
+  console.log("paginated data", paginatedData)
 
 
     // Add formatted dates

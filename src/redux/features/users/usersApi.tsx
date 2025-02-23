@@ -66,6 +66,7 @@ const usersApi = baseApi.injectEndpoints({
       }),
       providesTags: ["votes"], 
     }),
+    
     // get all winner
      getAllWinner: build.query({
       query: () => ({
@@ -98,6 +99,19 @@ const usersApi = baseApi.injectEndpoints({
       }),
       providesTags: ["winner"], 
     }),
+
+    // delete user
+    deleteUser: build.mutation({
+      query: (id) => ({
+        url: `/user/destroy/${id}`,
+        method: "DELETE",
+        headers:{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+      }),
+      invalidatesTags: ["members"],
+    }),
   }),
 });
 
@@ -112,5 +126,6 @@ export const {
   useGetAllWinnerQuery,
   useGetTotalParticipateQuery,
   useGetTotalUserWinnerQuery,
-  useGetAllWiinerListQuery
+  useGetAllWiinerListQuery,
+  useDeleteUserMutation
 } = usersApi;
