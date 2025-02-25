@@ -54,13 +54,15 @@ export default function MainNavLink({
     <div className="flex flex-col min-h-screen bg-white">
       <Link href={"/"} className="p-4">
         <div className="text-center mt-2">
-        <Image
+       <Link href={"https://ksquaredsourcedcity.com"}>
+       <Image
             src={logo}
             alt="Sneakers Logo"
             width={100}
             height={100}
             className="object-contain"
           />
+       </Link>
         </div>
       </Link>
       <nav className="flex-1 p-4 text-text_color">

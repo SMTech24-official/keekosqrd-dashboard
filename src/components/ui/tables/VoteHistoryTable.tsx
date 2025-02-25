@@ -7,9 +7,11 @@ import { TableProps } from "@/interface/table.type";
 export default function VoteHistoryTable({
   tableHeader,
   tableData,
-}: // isDelete = false,
-TableProps) {
-  console.log("tabledata", tableData);
+  // isDelete = false,
+}: TableProps) {
+
+  console.log("tabledata", tableData)
+ 
 
   return (
     <div>
@@ -44,13 +46,11 @@ TableProps) {
                 <td className="px-4 py-4 text-gray-500">
                   {item?.product?.product_name}
                 </td>
-
+               
                 <td className="px-4 py-4 text-gray-500">
                   {item?.product?.brand_name}
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">
-                  {item.formattedCreatedAt}
-                </td>
+                <td className="px-4 py-4 text-[#131D26]">{item.formattedCreatedAt}</td>
                 <td className="px-4 py-4 text-gray-500">
                   <span
                     className={`px-3 py-1 text-sm font-medium rounded-full ${
