@@ -54,6 +54,7 @@ export default function MainNavLink({
     <div className="flex flex-col min-h-screen bg-white">
      
         <div className="text-center mt-2">
+          {/* added link */}
        <Link href={"https://ksquaredsourcedcity.com"}>
        <Image
             src={logo}
