@@ -52,7 +52,7 @@ export default function MainNavLink({
   };
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <Link href={"/"} className="p-4">
+     
         <div className="text-center mt-2">
        <Link href={"https://ksquaredsourcedcity.com"}>
        <Image
@@ -60,11 +60,11 @@ export default function MainNavLink({
             alt="Sneakers Logo"
             width={100}
             height={100}
-            className="object-contain"
+            className="object-contain ml-5 mt-4"
           />
        </Link>
         </div>
-      </Link>
+     
       <nav className="flex-1 p-4 text-text_color">
         <div className="space-y-1">
           {navLink?.map((link) => (
