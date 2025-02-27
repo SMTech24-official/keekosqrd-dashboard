@@ -73,7 +73,7 @@ export default function Dashboard() {
 
   // Update metricsData once the API data is available
   useEffect(() => {
-    if (totalPayments && totalMembers && totalVoters) {
+    if ( totalMembers && totalVoters) {
       setMetricsData([
         {
           title: "Total Payments",
