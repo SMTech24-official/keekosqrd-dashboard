@@ -27,7 +27,7 @@ export function MetricCard({ title, value, icon: Icon }: MetricCardProps) {
             <div className="space-y-3">
               <p className="text-[20px] text-default font-medium">{title}</p>
               <h2 className="text-xl lg:text-2xl font-extrabold text-heading_color">
-                {value.toLocaleString()}
+                {value}
               </h2>
             </div>
           </div>
