@@ -36,6 +36,9 @@ export default function Dashboard() {
   const { data: totalVoters, isLoading: isLoadingVoters } =
     useGetTotalVotersQuery({});
 
+    console.log("totalPayments", totalPayments)
+    console.log("totalMembers", totalMembers)
+    console.log("totalVoters", totalVoters)
   // Fetch payments data for the selected month and year
   const { data: payments, isLoading } = useGetAllPaymentsQuery({
     month: selectedMonth,

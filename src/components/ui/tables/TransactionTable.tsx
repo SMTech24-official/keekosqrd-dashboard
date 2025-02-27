@@ -38,7 +38,7 @@ export default function TransactionTable({
                 <td className="px-4 py-4 text-gray-500">
                   {item.user?.email || "N/A"}
                 </td>
-                <td className="px-4 py-4 text-[#131D26]">{item.amount}</td>
+                <td className="px-4 py-4 text-[#131D26]">{item.stripe_status}</td>
                 
                 <td className="px-4 py-4 text-[#131D26]">{item.formattedCreatedAt}</td>
               </tr>
